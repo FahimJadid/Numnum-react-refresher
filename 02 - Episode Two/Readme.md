@@ -233,6 +233,8 @@ The solution to all this is the package-lock.json file which as described above 
   `import React from "react";`
   `import ReactDOM from "react-dom/client";`
 - Also Add the type="module" attribute to the `<script>` tag in index.html.
+- Let's make the code compatible with older browsers by adding browserslist to our package.json file.
+  `"browserslist": "> 0.5%, last 2 versions, not dead",`
 
 ```sh
 - npm init or npm init --yes
@@ -243,6 +245,8 @@ The solution to all this is the package-lock.json file which as described above 
     "start": "parcel index.html",
     "build": "parcel build index.html"
   },
+
+- "browserslist": "> 0.5%, last 2 versions, not dead",
 
 - npm run start
 - npm run build
