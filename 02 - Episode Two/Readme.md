@@ -156,16 +156,24 @@ So, the main difference is that ^ allows minor and patch level updates, while ~ 
 - Ans:
   Benefits:
 
-  - Dev Server out of the box
+  - Dev Server and Local Server
   - Code Splitting - splitting code into smaller chunks
-  - Tree Shaking - dead code elimination;
+  - Tree Shaking - dead code elimination, unused code
+  - File Watcher - watching for file changes
+  - Bundling - combining multiple files into one
   - Minification - removing unnecessary characters from code
   - Hot reloading - reloading the page without losing the state
   - Image Optimization - compressing images
   - Code Transformation - transpiling code from ES6 to ES5
-  - Reliable caching - caching files for better performance
+  - Reliable caching - caching files for better performance & faster load times
   - Transpilation - converting code from one language to another
   - Compression - compressing files for better performance
+  - Consistent hashing - hashing files for better performance
+  - Source maps - mapping code to the original source
+  - Differential bundling - supporting multiple older browsers, creates fallbacks
+  - Diagonistic reporting - reporting errors and warnings
+  - Error Handling - handling errors
+  - HTTPS - serving files over HTTPS
 
   Cons:
 
@@ -201,6 +209,13 @@ The solution to all this is the package-lock.json file which as described above 
 
 - # Q: What is the purpose of the '.gitignore' file?
 - Ans: The .gitignore file is a text file that tells Git which files or folders to ignore in a project. A local .gitignore file is usually placed in the root directory of a project. ... gitignore file is committed into the Git repository, the rules would be applied to every user of that repository. Files like .env and node_modules folder are not committed to the repository. So, we have to add them in the .gitignore file.
+  example:
+
+```sh
+    /node_modules
+    /dist
+    /.parcel-cache
+```
 
 ### Build time : Building a web app with Parcel
 
@@ -211,6 +226,13 @@ The solution to all this is the package-lock.json file which as described above 
 - Parcel has a development server built in, which will automatically rebuild your app as you make changes. To start it, run the parcel CLI command : `npx parcel index.html`
 - So far, we’ve been running the parcel CLI directly, but it can be useful to create some scripts in your package.json file to make this easier. We'll also setup a script to build your app for production using the parcel build command.
 - Now let's add a script for build and development to our package.json to run parcel:
+- Now we can run `npm run start` to start the development server, and `npm run build` to build your app for production.
+- Install React and ReactDOM & remove the CDN links from index.html
+- Now we can import React and ReactDOM in our App.js file and use them to render our app, otherwise it will throw an error that React is not defined.
+- Add these imports to App.js:
+  `import React from "react";`
+  `import ReactDOM from "react-dom/client";`
+- Also Add the type="module" attribute to the `<script>` tag in index.html.
 
 ```sh
 - npm init or npm init --yes
@@ -221,5 +243,12 @@ The solution to all this is the package-lock.json file which as described above 
     "start": "parcel index.html",
     "build": "parcel build index.html"
   },
+
+- npm run start
+- npm run build
+- npm i react react-dom
+
+- import React from "react";
+- import ReactDOM from "react-dom/client";
 
 ```
