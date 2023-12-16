@@ -93,7 +93,20 @@
 
 Similarly, do not generate keys on the fly, e.g. with key={Math.random()}. This will cause keys to never match up between renders, leading to all your components and DOM being recreated every time. Not only is this slow, but it will also lose any user input inside the list items. Instead, use a stable ID based on the data.
 
-Note that your components won’t receive key as a prop. It’s only used as a hint by React itself. If your component needs an ID, you have to pass it as a separate prop: <Profile key={id} userId={id} />.
+Note that your components won’t receive key as a prop. It’s only used as a hint by React itself. If your component needs an ID, you have to pass it as a separate prop:
+
+```sh
+  <Profile key={id} userId={id} />.
+```
+
+- # Q: Is react can only be written with JSX?
+- Ans: No, it's a misconception. React can be written without JSX, but JSX makes React a lot more elegant and readable. JSX is a syntax extension to JavaScript. It is similar to a template language, but it has full power of JavaScript. JSX gets compiled to React.createElement() calls which return plain JavaScript objects called “React elements”. JSX is recommended to use in React because it is easier to read, write, and maintain and debug.
+
+- # Q: What will happen if there is already elements inside the id="root" in the index.html file?
+- Ans: If there is already elements inside the id="root" in the index.html file, then the existing HTML element will be replaced by the React elements in the root div. Because browser parse/read from top to bottom and inserts the HTML elements into the DOM but after the React & ReactDOM loads and starts executing react codes and changes the DOM when it reaches the root.render() and the existing HTML code will be replaced by the React elements. This is not a good practice. We should not mix React and non-React code. We should only use React to render the entire application.
+
+- # Q: Can we render HTML and React in the index.html simultaneously?
+- Ans: Yes, we can render HTML and React in the index.html simultaneously. Because react is a library that we have to include in our project for building user interfaces. And at the end of the day, React is just JavaScript. We can even apply react only to a specific portion of our application as well like header, footer, sidebar, navbar, etc. We can even use React to render the entire application. It's up to us how we want to use React.
 
 ## Now for the Main Event:
 
