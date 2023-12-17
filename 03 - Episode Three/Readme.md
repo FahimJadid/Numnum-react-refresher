@@ -113,7 +113,7 @@ root.render(heading);
 - Let's create a JSX heading:
 
 ```sh
-
+// React Element
 const heading = <h1 id="heading">Hello World from JSX</h1>;
 
 ```
@@ -191,6 +191,8 @@ const HeadingComponent = () => {
 
 ```
 
+- Let's use heading element inside our functional component:
+
 ```sh
 
 import React from "react";
@@ -212,3 +214,5 @@ root.render(<HeadingComponent />);
 
 
 ```
+
+- If a function is returning a react element or piece of JSX is a functional component. So we can say that `HeadingComponent` is a functional component.
