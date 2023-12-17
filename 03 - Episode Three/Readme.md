@@ -89,6 +89,13 @@ This table provides a comparison of the basic syntax. Remember that functional c
 
   - Ans: Class components are ES6 classes. They extend from React.Component and can have state and lifecycle methods. We can use lifecycle methods to control what happens when each instance of a component is created, updated, or destroyed. We can also use lifecycle methods to perform actions like fetching data when a component is created or send an alert when a component is destroyed. We can also use lifecycle methods to perform actions like fetching data when a component is created or send an alert when a component is destroyed. We can also use lifecycle methods to perform actions like fetching data when a component is created or send an alert when a component is destroyed.
 
+- # Q: What is Component Composition?
+
+  - Ans: Component composition is a way to combine multiple components to create a new one. This allows us to reuse components in different places of our application. We can also use component composition to create components that are more complex and can be reused in other parts of our application.
+
+- # Q: What is cross site scripting attack?
+  - Ans: Cross-site scripting (XSS) is a type of security vulnerability typically found in web applications. XSS attacks enable attackers to inject client-side scripts into web pages viewed by other users. A cross-site scripting vulnerability may be used by attackers to bypass access controls such as the same-origin policy. Cross-site scripting carried out on websites accounted for roughly 84% of all security vulnerabilities documented by Symantec as of 2007. Their effect may range from a petty nuisance to a significant security risk, depending on the sensitivity of the data handled by the vulnerable site and the nature of any security mitigation implemented by the site's owner.
+
 # Let's start building our React application:
 
 ```sh
@@ -192,6 +199,8 @@ const HeadingComponent = () => {
 ```
 
 - Let's use heading element inside our functional component:
+- Putting an element and a variable inside a component:
+- Also putting an react element inside element also same as putting a variable inside element and you can also put component inside an element.
 
 ```sh
 
@@ -199,11 +208,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 const heading = <h1 id="heading">Hello World from Component</h1>;
-
+const number = 2023;
 const HeadingComponent = () => {
   return (
     <div>
       {heading}
+      {number}
     </div>
   );
 };
@@ -216,3 +226,21 @@ root.render(<HeadingComponent />);
 ```
 
 - If a function is returning a react element or piece of JSX is a functional component. So we can say that `HeadingComponent` is a functional component.
+
+- Putting a component inside another component is called `component composition`.
+
+```sh
+const Title = () => {
+  return <h1 className="title">Hello World</h1>;
+};
+
+const HeadingComponent = () => {
+  return (
+    <>
+      <Title />
+    </>
+  );
+};
+
+
+```
