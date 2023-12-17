@@ -47,7 +47,47 @@
 
 This table shows that JSX code is more readable and easier to write, while the transpiled JavaScript code is what actually runs in the browser. The Babel transpiler converts JSX into `React.createElement()` calls. Please note that this is a simplified example and actual transpiled code may vary based on the configuration and plugins used with Babel.
 
-- # Q: What is Babel?
+- # Q: What is Component?
+
+  - Ans: A Component is one of the core building blocks of React. In other words, we can say that every application you will develop in React will be made up of pieces called components. Components make the task of building UIs much easier. You can see a UI broken down into multiple individual pieces called components and work on them independently and merge them all in a parent component which will be your final UI. Components in React basically return a piece of JSX code that tells what should be rendered on the screen. In simple terms, React components are like LEGO bricks. They are the individual building blocks that come together to create a full-fledged user interface. A component can be a button, a form, a header, or any other part of the webpage that you can think of.
+
+  Think of components as reusable templates that you can place throughout your web application to construct a complete user experience.
+
+- # Q: Why are Components important in React?
+- Ans:
+
+  - Modularity and Reusability
+  - Ease of maintenance
+  - Ease of collaboration
+  - Composable with other components
+  - Encapsulation
+  - Ease of deployment
+  - Ease of testing, debugging
+  - Ease of development
+
+- # Q: Types of Components in React JS :
+
+  - Ans: There are two types of components in React JS:
+
+    1. Functional Components
+    2. Class Components
+
+    Sure, here's a markdown table comparing the syntax of Functional components and Class components in React:
+
+    | Component Type | Syntax                                                                                                               |
+    | -------------- | -------------------------------------------------------------------------------------------------------------------- |
+    | Functional     | `jsx\nconst Component = (props) => {\n  // You can use Hooks here\n  return <div>{props.children}</div>;\n}`         |
+    | Class          | `jsx\nclass Component extends React.Component {\n  render() {\n    return <div>{this.props.children}</div>;\n  }\n}` |
+
+This table provides a comparison of the basic syntax. Remember that functional components can use Hooks to add state and lifecycle methods, which were previously only available in class components. Both types of components are commonly used in React applications. The choice between them depends on your specific needs and preferences.
+
+- # Q: What are Functional Components?
+
+  - Ans: Functional components are basic JavaScript functions. These are typically arrow functions but can also be created with the regular function keyword. These functions take in an optional input which we call props (short for properties) and return a React element that describes how a section of the UI (User Interface) should appear.
+
+- # Q: What are Class Components?
+
+  - Ans: Class components are ES6 classes. They extend from React.Component and can have state and lifecycle methods. We can use lifecycle methods to control what happens when each instance of a component is created, updated, or destroyed. We can also use lifecycle methods to perform actions like fetching data when a component is created or send an alert when a component is destroyed. We can also use lifecycle methods to perform actions like fetching data when a component is created or send an alert when a component is destroyed. We can also use lifecycle methods to perform actions like fetching data when a component is created or send an alert when a component is destroyed.
 
 # Let's start building our React application:
 
@@ -64,7 +104,8 @@ root.render(heading);
 
 ```
 
-- Let's rewind what happening behind the scene:
+# Let's rewind what happening behind the scene:
+
 - We are creating a React Element using `React.createElement()` method. React Element is an object and after render it becomes a HTML Element. This method takes three arguments. The first argument is the type of the element. The second argument is the props: attributes/ids/classes etc of the element. The third argument is the children of the element. The `React.createElement()` method returns a React Element.So heading is a React Element that we have created. If you console heading you'll find out heading is an object behind the scenes. And when we do `root.render` this powerful library ReactDOM takes this object and converts it into a HTML element and renders it on the screen.
 
 - But this type of code is clumsy and hard to read. So we use JSX to write React code.
