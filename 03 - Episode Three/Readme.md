@@ -72,12 +72,12 @@ This table shows that JSX code is more readable and easier to write, while the t
     1. Functional Components
     2. Class Components
 
-    Sure, here's a markdown table comparing the syntax of Functional components and Class components in React:
+    Here's a table comparing the syntax of Functional components and Class components in React:
 
-    | Component Type | Syntax                                                                                                               |
-    | -------------- | -------------------------------------------------------------------------------------------------------------------- |
-    | Functional     | `jsx\nconst Component = (props) => {\n  // You can use Hooks here\n  return <div>{props.children}</div>;\n}`         |
-    | Class          | `jsx\nclass Component extends React.Component {\n  render() {\n    return <div>{this.props.children}</div>;\n  }\n}` |
+    | Component Type | Syntax                                                                              |
+    | -------------- | ----------------------------------------------------------------------------------- |
+    | Functional     | `const Component = (props) => {return <div>{props.children}</div>;`                 |
+    | Class          | `class Component extends React.Component {return <div>{this.props.children}</div>;` |
 
 This table provides a comparison of the basic syntax. Remember that functional components can use Hooks to add state and lifecycle methods, which were previously only available in class components. Both types of components are commonly used in React applications. The choice between them depends on your specific needs and preferences.
 
@@ -176,3 +176,39 @@ const heading = React.createElement("h1", { id: "heading" }, "Hello World");
   | `oninvalid`            | `onInvalid`            |
 
 This table shows the equivalent React attributes for HTML attributes. In React, we use camelCase for HTML attributes and event handlers. This is because React is JavaScript, and in JavaScript, DOM properties and methods are camelCase.
+
+- Let's create a React functional component:
+
+```sh
+
+const HeadingComponent = () => {
+  return (
+    <div>
+      <h1>Hello I am functional Component</h1>
+    </div>
+  );
+};
+
+```
+
+```sh
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+const heading = <h1 id="heading">Hello World from Component</h1>;
+
+const HeadingComponent = () => {
+  return (
+    <div>
+      {heading}
+    </div>
+  );
+};
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(<HeadingComponent />);
+
+
+```
