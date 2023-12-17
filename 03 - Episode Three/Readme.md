@@ -36,16 +36,18 @@
 
   here's a comparison table showing a JSX code snippet and its transpiled version using Babel:
 
-| JSX Code (Before Transpilation)         | JavaScript Code (After Transpilation) |
-| --------------------------------------- | ------------------------------------- |
-| ```jsx                                  | ```javascript                         |
-| const element = <h1>Hello, world!</h1>; | const element = React.createElement(  |
-|                                         | 'h1',                                 |
-|                                         | null,                                 |
-|                                         | 'Hello, world!'                       |
-|                                         | );                                    |
+  | JSX Code (Before Transpilation)         | JavaScript Code (After Transpilation) |
+  | --------------------------------------- | ------------------------------------- |
+  | ```jsx                                  | ```javascript                         |
+  | const element = <h1>Hello, world!</h1>; | const element = React.createElement(  |
+  |                                         | 'h1',                                 |
+  |                                         | null,                                 |
+  |                                         | 'Hello, world!'                       |
+  |                                         | );                                    |
 
 This table shows that JSX code is more readable and easier to write, while the transpiled JavaScript code is what actually runs in the browser. The Babel transpiler converts JSX into `React.createElement()` calls. Please note that this is a simplified example and actual transpiled code may vary based on the configuration and plugins used with Babel.
+
+- # Q: What is Babel?
 
 # Let's start building our React application:
 
@@ -88,3 +90,48 @@ const heading = React.createElement("h1", { id: "heading" }, "Hello World");
 - So we can say that JSX is a syntactic sugar for `React.createElement()` method.
 
 - From now on we'll use JSX to write React code:
+
+- The Rules of JSX :
+
+  1. Return a single root element:
+
+  - We can't return multiple elements. We can only return a single root element. So we have to wrap all the elements inside a single root element. We can use `<React.Fragment>` to wrap all the elements inside a single root element. `<React.Fragment>` is a built-in component of React. We can also use empty tags `<>` to wrap all the elements inside a single root element. But we can't use empty tags `<>` to pass props to the root element. We can only use `<React.Fragment>` to pass props to the root element.
+
+  2. Close all the tags:
+
+  - We have to close all the tags. We can't use self closing tags. We have to close all the tags even if they don't have any children.
+
+  3. Use camelCase for html attributes:
+
+  | HTML Attribute         | React Attribute        |
+  | ---------------------- | ---------------------- |
+  | `class`                | `className`            |
+  | `for`                  | `htmlFor`              |
+  | `tabindex`             | `tabIndex`             |
+  | `onclick`              | `onClick`              |
+  | `onchange`             | `onChange`             |
+  | `onsubmit`             | `onSubmit`             |
+  | `oninput`              | `onInput`              |
+  | `onfocus`              | `onFocus`              |
+  | `onblur`               | `onBlur`               |
+  | `onkeydown`            | `onKeyDown`            |
+  | `onkeyup`              | `onKeyUp`              |
+  | `onkeypress`           | `onKeyPress`           |
+  | `ondblclick`           | `onDoubleClick`        |
+  | `oncontextmenu`        | `onContextMenu`        |
+  | `onwheel`              | `onWheel`              |
+  | `oncopy`               | `onCopy`               |
+  | `oncut`                | `onCut`                |
+  | `onpaste`              | `onPaste`              |
+  | `oncompositionstart`   | `onCompositionStart`   |
+  | `oncompositionupdate`  | `onCompositionUpdate`  |
+  | `oncompositionend`     | `onCompositionEnd`     |
+  | `onanimationstart`     | `onAnimationStart`     |
+  | `onanimationiteration` | `onAnimationIteration` |
+  | `onanimationend`       | `onAnimationEnd`       |
+  | `ontransitionstart`    | `onTransitionStart`    |
+  | `ontransitionend`      | `onTransitionEnd`      |
+  | `ontransitioncancel`   | `onTransitionCancel`   |
+  | `oninvalid`            | `onInvalid`            |
+
+This table shows the equivalent React attributes for HTML attributes. In React, we use camelCase for HTML attributes and event handlers. This is because React is JavaScript, and in JavaScript, DOM properties and methods are camelCase.
