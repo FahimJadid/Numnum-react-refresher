@@ -21,12 +21,23 @@
   margin: 10px;
 }
 
+.res-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .res-card {
   width: 200px;
-  height: 300px;
+  height: 400px;
+  padding: 5px;
+  margin: 5px;
   border: 1px solid black;
 }
 
 .search {
   padding: 10px;
+}
+
+.res-img {
+  width: 100%;
 }

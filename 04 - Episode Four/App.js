@@ -24,7 +24,16 @@ const Header = () => {
 const RestaurantCard = () => {
   return (
     <div className="res-card">
+      <img
+        className="res-img"
+        src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/be66rnc0tj2jgdadiviu"
+        alt="restaurant"
+      />
+
       <h3>Koyla House</h3>
+      <h4>Biriyani, Kabab</h4>
+      <h4>4.5 stars</h4>
+      <h4>30 minutes</h4>
     </div>
   );
 };
@@ -34,6 +43,11 @@ const Body = () => {
     <div className="body">
       <div className="search">Search</div>
       <div className="res-container">
+        <RestaurantCard />
+        <RestaurantCard />
+        <RestaurantCard />
+        <RestaurantCard />
+        <RestaurantCard />
         <RestaurantCard />
       </div>
     </div>
