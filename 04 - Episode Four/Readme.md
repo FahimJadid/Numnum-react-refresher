@@ -4,8 +4,17 @@
 
 # Q&A:
 
-- # Q:
+- # Q: What is Props?
+
+  - Ans: Props is a way to pass data from one component to another component and makes the components dynamic. Props are immutable and passed in the same way as arguments are passed in functions. Props are usually passed from parent component to child component. Props are passed as attributes in JSX. Props are accessed in the child component using props object. Props are used to make components reusable. React wraps all the props in a single object called props and passes it to the component.
+
+- # Q: Benefits of using props?
   - Ans:
+    - Makes the code more readable
+    - Makes the code more maintainable
+    - Makes the code more reusable
+    - Makes the code more testable
+    - Makes the code more scalable
 
 # Let's Build The Application plan:
 
@@ -141,33 +150,6 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
 ```
 
-- CSS implementation for Header component:
-
-```css
-.header {
-  display: flex;
-  justify-content: space-between;
-  border: 1px solid red;
-}
-
-.logo {
-  width: 100px;
-  padding: 0px 20px;
-}
-
-.nav-items > ul {
-  display: flex;
-  font-size: 20px;
-  list-style-type: none;
-  padding: 0px 20px;
-}
-
-.nav-items > ul > li {
-  padding: 10px;
-  margin: 10px;
-}
-```
-
 # Step 3 : Let's create a Body component
 
 - Create a functional component called Body
@@ -208,6 +190,82 @@ const Body = () => {
       <div className="res-container">
         <RestaurantCard />
       </div>
+    </div>
+  );
+};
+```
+
+# Step 4 : Let's Use props to make the RestaurantCard component dynamic
+
+- We will pass the restaurant details as props from the Body component to the RestaurantCard component.
+- React automatically passes the props(restaurant details) as an object.
+- We will destructure the props object in the RestaurantCard component. Some developers prefer to destructure the props object in the function parameters itself.
+
+- Benefits of destructuring the props object:
+
+  - Makes the code more readable
+  - Makes the code more maintainable
+
+- code:
+- Passing props from Body component to RestaurantCard component:
+
+```js
+<div className="res-container">
+  <RestaurantCard
+    resName="Domino's"
+    cuisine="Pizza, Fast Food"
+    rating="4.3"
+    deliveryTime="40"
+  />
+  <RestaurantCard
+    resName="KFC"
+    cuisine="Burger, Chicken Fry, Fast food"
+    rating="4.4"
+    deliveryTime="30"
+  />
+</div>
+```
+
+- Destructuring the props object in the RestaurantCard component:
+- Console logging to see the props objects in the browser console
+
+- code:
+
+```js
+const RestaurantCard = (props) => {
+  console.log(props);
+  return (
+    <div className="res-card">
+      <img
+        className="res-img"
+        src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/be66rnc0tj2jgdadiviu"
+        alt="restaurant"
+      />
+
+      <h3>{props.resName}</h3>
+      <h4>{props.cuisine}</h4>
+      <h4>{props.rating} stars</h4>
+      <h4>{props.deliveryTime} minutes</h4>
+    </div>
+  );
+};
+```
+
+- Destructuring the props object on the fly in the RestaurantCard component:
+
+- code:
+
+```js
+// const RestaurantCard = (props) => {
+//   const { resName, cuisine, rating, deliveryTime } = props;
+// or same thing can be written as
+const RestaurantCard = ({ resName, cuisine, rating, deliveryTime }) => {
+  return (
+    <div className="res-card">
+      <h3>{resName}</h3>
+      <h4>{cuisine}</h4>
+      <h4>{rating} stars</h4>
+      <h4>{deliveryTime} minutes</h4>
     </div>
   );
 };

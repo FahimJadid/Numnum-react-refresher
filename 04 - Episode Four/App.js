@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import logo from "./Logo.png";
-import image1 from "./images/1.jpg";
 
 const Header = () => {
   return (
@@ -21,7 +20,8 @@ const Header = () => {
   );
 };
 
-const RestaurantCard = () => {
+const RestaurantCard = ({ resName, cuisine, rating, deliveryTime }) => {
+  console.log({ resName, cuisine, rating, deliveryTime });
   return (
     <div className="res-card">
       <img
@@ -30,10 +30,10 @@ const RestaurantCard = () => {
         alt="restaurant"
       />
 
-      <h3>Koyla House</h3>
-      <h4>Biriyani, Kabab</h4>
-      <h4>4.5 stars</h4>
-      <h4>30 minutes</h4>
+      <h3>{resName}</h3>
+      <h4>{cuisine}</h4>
+      <h4>{rating} stars</h4>
+      <h4>{deliveryTime} minutes</h4>
     </div>
   );
 };
@@ -43,12 +43,18 @@ const Body = () => {
     <div className="body">
       <div className="search">Search</div>
       <div className="res-container">
-        <RestaurantCard />
-        <RestaurantCard />
-        <RestaurantCard />
-        <RestaurantCard />
-        <RestaurantCard />
-        <RestaurantCard />
+        <RestaurantCard
+          resName="Domino's"
+          cuisine="Pizza, Fast Food"
+          rating="4.3"
+          deliveryTime="40"
+        />
+        <RestaurantCard
+          resName="KFC"
+          cuisine="Burger, Chicken Fry, Fast food"
+          rating="4.4"
+          deliveryTime="30"
+        />
       </div>
     </div>
   );
