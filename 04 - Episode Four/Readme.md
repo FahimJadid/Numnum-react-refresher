@@ -9,12 +9,19 @@
   - Ans: Props is a way to pass data from one component to another component and makes the components dynamic. Props are immutable and passed in the same way as arguments are passed in functions. Props are usually passed from parent component to child component. Props are passed as attributes in JSX. Props are accessed in the child component using props object. Props are used to make components reusable. React wraps all the props in a single object called props and passes it to the component.
 
 - # Q: Benefits of using props?
+
   - Ans:
     - Makes the code more readable
     - Makes the code more maintainable
     - Makes the code more reusable
     - Makes the code more testable
     - Makes the code more scalable
+
+- # Q: What is Config-driven UI?
+
+  - Ans: Config-driven UI is a technique that allows you to create dynamic and customizable UIs without hard coding them. It uses a configuration file to define the layout and content of the UI components. This way, you can easily change the appearance and behavior of your UI without modifying the source code. Config-driven UI can be implemented using various frameworks and libraries, such as ReactJS, Angular, Vue, etc.
+
+  One of the benefits of config-driven UI is that it makes your code more maintainable and reusable. You can easily update or add new features to your UI by editing the configuration file instead of changing multiple files in your codebase. You can also reuse the same configuration file for different scenarios or environments. For example, A food delivery app can have different configurations for different cities or countries. This way, you can easily customize the UI for each location without having to write separate code for each location or without hard coding the UI.
 
 # Let's Build The Application plan:
 
