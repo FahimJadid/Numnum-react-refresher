@@ -41,6 +41,18 @@
   `Easier testing and debugging:` You can use hooks to mock or stub data, simulate user interactions, and isolate dependencies. This makes it easier to test your components in isolation and debug them when something goes wrong.
   `Reduced bundle size:` Hooks eliminate the need for class instances, constructors, bind methods, and other overheads that come with class components. This reduces the size of your bundle and improves performance.
 
+- # Q: What is render in react hooks?
+
+  - Ans: Whenever a component's state changes, React re-renders the component. This means that React will call the render function of the component. The render function returns a React element, which is a lightweight description of what to render. So what do we mean by re-render! Re-render means when I click a button and the state changes React will call the render function of the component again. because the component's state has changed and React needs to update the UI to reflect the new state. Behind the scenes React will compare the new element with the previous one and only update the parts of the DOM that have changed. React keep track of the DOM changes and only update the parts of the DOM that have changed. This is called the virtual DOM. React uses the virtual DOM to update the DOM efficiently.
+
+- # Q: What is DOM?
+
+  - Ans: In simple terms, the DOM is a tree-like structure that represents the HTML of a web page. It is a programming interface for HTML and XML documents. The DOM is used to manipulate the HTML elements of a web page. For example, you can use the DOM to add, remove, or modify HTML elements.
+
+- # Q: What is virtual DOM?
+  - Ans: The virtual DOM is a lightweight representation of the DOM. It is a JavaScript object that contains the same properties as the DOM. The virtual DOM is used to update the DOM efficiently. When the state of a component changes, React will compare the new element with the previous one and only update the parts of the DOM that have changed. React keep track of the DOM changes and only update the parts of the DOM that have changed. This is called the virtual DOM. React uses the virtual DOM to update the DOM efficiently.
+    The reason we do not change the DOM directly Because changing the DOM is an expensive operation. It can be slow and cause performance issues. So, React uses the virtual DOM to update the DOM efficiently.
+
 # Building The Application with Hooks:
 
 - # Step 1: Refactor & Clean Up The Project:
@@ -161,14 +173,12 @@ const Body = () => {
 
 - Now it's time for UI update because we want the UI to change automatically when the user clicks on the button. Normal variables can not keep track of the changes. So, we need to use the `useState` hook to keep track of the changes. We need to import the `useState` hook from the react library.
 
-- useState is a function that takes an initial value as an argument and returns an array with two elements. The first element is the state variable and the second element is the function that we use to update the state variable. We can name these elements anything we want. But it's a good practice to name them in a way that makes sense. So, we will name the first element `listOfRestaurants` and the second element `setListOfRestaurants`. And we will set the initial value of the state variable to the resList array.
-
-- Then we need to update the `resList` variable with the `listOfRestaurants` variable. Then we will pass the `listOfRestaurants` variable to the `RestaurantCard` component. And we will map through the `listOfRestaurants` variable instead of the `resList` variable. After that we will update the `listOfRestaurants` variable with the `filteredResList` variable using the `setListOfRestaurants` function. So, when the user clicks on the button, the `listOfRestaurants` variable will be updated with the `filteredResList` variable. And when the `listOfRestaurants` variable is updated, the UI will be updated automatically.
+- useState is a function that takes an initial value as an argument and returns an array with two elements. The first element is the state variable and the second element is the function that we use to update the state variable. We can name these elements anything we want. But it's a good practice to name them in a way that makes sense. So, we will name the first element `listOfRestaurants` and the second element `setListOfRestaurants`. And we will set the initial value of the state variable to the resList array. So, the initial value of the state variable will be the resList array. And we will use the `setListOfRestaurants` function to update the state variable. So, when the user clicks on the button, we will update the state variable with the filtered array. And when the state variable is updated, the UI will be updated automatically.
 
 ```js
+import { useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 import resList from "./../Utils/mockData";
-import { useState } from "react";
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState(resList);
@@ -178,7 +188,7 @@ const Body = () => {
       <div className="filter">
         <button
           onClick={() => {
-            const filteredResList = resList.filter((res) => {
+            const filteredResList = listOfRestaurants.filter((res) => {
               return Number(res.info.rating.aggregate_rating) >= 4.2;
             });
             setListOfRestaurants(filteredResList);
