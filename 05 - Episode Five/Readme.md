@@ -26,3 +26,18 @@
   - Now create a new file called `Header.js` inside the components folder. Then cut the Header component from the App.js file and paste it into the Header.js file and export it.
   - Change the import statements in the Header & App.js files.
   - `Note: Always use the same name for the component and the file name. It will make it easier to import the component.`
+  - Let's Do the same steps for the Body & RestaurantCard components.
+
+```js
+
+export default Header;
+export default Body;
+
+import Header from "../src/components/Header";
+import Body from "../src/components/Body";
+
+```
+
+- Now we can see that RestaurantCard component is connected to the Body component. We are passing the resList data as props to the RestaurantCard component. So, we need to pass the resList data to the Body component first. Then we can pass it to the RestaurantCard component. That's why we need to move the resList data to the Body component. And also need to import the RestaurantCard component in the Body component.
+
+- Now if we restart the application, we can see that the application is working fine.
