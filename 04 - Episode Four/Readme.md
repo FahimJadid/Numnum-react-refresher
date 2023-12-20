@@ -363,9 +363,12 @@ const RestaurantCard = (props) => {
 - To display all the restaurants, there needs a small change in the API data. Right now our resObj object has only one restaurant data. But in real world scenario we will have multiple restaurant data and it will be an array of objects. So we will change the resObj object to an array of objects.
 - So let's use all the restaurant data from the API file `liveData.json`.
 - Now it's not an object anymore, it is a restaurant list. So we will change the name of the resObj object to resList and use it as props in the Body component.
-- `<div className="res-container">
+
+```js
+<div className="res-container">
   <RestaurantCard resData={resList[1]} />
-   </div>`
+</div>
+```
 
 # Step 7 : Let's optimize the code using best practices:
 
