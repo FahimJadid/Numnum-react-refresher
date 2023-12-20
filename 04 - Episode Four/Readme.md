@@ -277,3 +277,51 @@ const RestaurantCard = ({ resName, cuisine, rating, deliveryTime }) => {
   );
 };
 ```
+
+# Step 5 : Let's integrate Live API data to our application
+
+- We will use the Zomato API to get the restaurant data.
+- Right now we will use the static data from the API.
+- Later we will use the dynamic data from the API with data fetching.
+- We created a resObj object with the restaurant data from the API.
+- We will pass the resObj object as props(resData) from the Body component to the RestaurantCard component.
+- We will destructure the resData object in the RestaurantCard component.
+- We will use the resData object to display the restaurant data in the RestaurantCard component.
+- For now we are destructuring the image, name, cuisines, aggregate_rating, and average_cost_for_two properties from the resData object.
+- For the cuisine property, we are using the map method to iterate over the cuisines array because it's an array of objects. and then we are using the join method to join the cuisines array with a comma.
+- For now we are using just one restaurant data from the API. Later we will use the map method to iterate over the resObj array to display all the restaurant data.
+
+- code:
+- Body component:
+
+```js
+const Body = () => {
+  return (
+    <div className="body">
+      <div className="search">Search</div>
+      <div className="res-container">
+        <RestaurantCard resData={resObj} />
+      </div>
+    </div>
+  );
+};
+```
+
+- RestaurantCard component:
+
+```js
+const RestaurantCard = (props) => {
+  const { resData } = props;
+  return (
+    <div className="res-card">
+      <img className="res-img" src={resData.info.image.url} alt="restaurant" />
+
+      <h3>{resData.info.name}</h3>
+      <h4>{resData.info.cuisine.map(({ name }) => name).join(", ")}</h4>
+      <h4>{resData.info.rating.aggregate_rating} stars</h4>
+      <h4>{resData.order.deliveryTime}</h4>
+      <h4>{resData.info.cft.text}</h4>
+    </div>
+  );
+};
+```

@@ -24,11 +24,7 @@ const RestaurantCard = (props) => {
   const { resData } = props;
   return (
     <div className="res-card">
-      <img
-        className="res-img"
-        src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/be66rnc0tj2jgdadiviu"
-        alt="restaurant"
-      />
+      <img className="res-img" src={resData.info.image.url} alt="restaurant" />
 
       <h3>{resData.info.name}</h3>
       <h4>{resData.info.cuisine.map(({ name }) => name).join(", ")}</h4>
