@@ -95,7 +95,7 @@ import resList from "../Utils/mockData";
   </div>
   ```
 
-  - Then we'll add functionality to it. We will add a click handler to the button. So When the user clicks on the button, we will filter the restaurants based on their rating. In this `filter-btn` we will pass an attribute called `onClick`. And this takes a callback function so we will pass a function called `handleFilter`. So upon click this function will be called. We will create this function in the Body component. Inside the function we will write the logic to filter the restaurants.
+  - Then we'll add functionality to it. We will add a click handler to the button. So When the user clicks on the button, we will filter the restaurants based on their rating. In this `filter-btn` we will pass an attribute called `onClick`. And this takes a callback function. So upon click this callback function will be called. Inside the function we will write the logic to filter the restaurants.
 
   ```js
   <button
@@ -132,4 +132,72 @@ import resList from "../Utils/mockData";
   - Here is a catch, the data type of the rating is a string. So, we need to convert it into a number to compare with the 4.2 Otherwise it will not work. So, we need to use the `Number()` method to convert the string into a number.
   - And then we are storing the filtered array in the filteredResList variable. And we are logging the filteredResList variable to the console. So, if we click on the button, we can see that we are getting the list of filtered restaurant array in the console. But we are not seeing the filtered array in the UI. Because we are not updating the state of the application. We are only updating the resList variable. So, we need to update the state of the application. We need to use the `useState` hook to update the state of the application.
 
-  -
+```js
+const Body = () => {
+  return (
+    <div className="body">
+      <div className="filter">
+        <button
+          onClick={() => {
+            const filteredResList = resList.filter((res) => {
+              return Number(res.info.rating.aggregate_rating) >= 4.2;
+            });
+            console.log(filteredResList);
+          }}
+          className="filter-btn"
+        >
+          Top Rated Restaurants
+        </button>
+      </div>
+      <div className="res-container">
+        {resList.map((restaurant) => (
+          <RestaurantCard key={restaurant.info.resId} resData={restaurant} />
+        ))}
+      </div>
+    </div>
+  );
+};
+```
+
+- Now it's time for UI update because we want the UI to change automatically when the user clicks on the button. Normal variables can not keep track of the changes. So, we need to use the `useState` hook to keep track of the changes. We need to import the `useState` hook from the react library.
+
+- useState is a function that takes an initial value as an argument and returns an array with two elements. The first element is the state variable and the second element is the function that we use to update the state variable. We can name these elements anything we want. But it's a good practice to name them in a way that makes sense. So, we will name the first element `listOfRestaurants` and the second element `setListOfRestaurants`. And we will set the initial value of the state variable to the resList array.
+
+- Then we need to update the `resList` variable with the `listOfRestaurants` variable. Then we will pass the `listOfRestaurants` variable to the `RestaurantCard` component. And we will map through the `listOfRestaurants` variable instead of the `resList` variable. After that we will update the `listOfRestaurants` variable with the `filteredResList` variable using the `setListOfRestaurants` function. So, when the user clicks on the button, the `listOfRestaurants` variable will be updated with the `filteredResList` variable. And when the `listOfRestaurants` variable is updated, the UI will be updated automatically.
+
+```js
+import RestaurantCard from "./RestaurantCard";
+import resList from "./../Utils/mockData";
+import { useState } from "react";
+
+const Body = () => {
+  const [listOfRestaurants, setListOfRestaurants] = useState(resList);
+
+  return (
+    <div className="body">
+      <div className="filter">
+        <button
+          onClick={() => {
+            const filteredResList = resList.filter((res) => {
+              return Number(res.info.rating.aggregate_rating) >= 4.2;
+            });
+            setListOfRestaurants(filteredResList);
+          }}
+          className="filter-btn"
+        >
+          Top Rated Restaurants
+        </button>
+      </div>
+      <div className="res-container">
+        {listOfRestaurants.map((restaurant) => (
+          <RestaurantCard key={restaurant.info.resId} resData={restaurant} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default Body;
+```
+
+- Now if we click on the button, we can see that the UI is updating automatically. Because we are updating the state of the application. And when the state of the application changes, the UI updates automatically.
