@@ -23,6 +23,37 @@
 
   One of the benefits of config-driven UI is that it makes your code more maintainable and reusable. You can easily update or add new features to your UI by editing the configuration file instead of changing multiple files in your codebase. You can also reuse the same configuration file for different scenarios or environments. For example, A food delivery app can have different configurations for different cities or countries. This way, you can easily customize the UI for each location without having to write separate code for each location or without hard coding the UI.
 
+- # Q: What is Map method and Join method?
+
+  - Ans: The map() method creates a new array populated with the results of calling a provided function on every element in the calling array. The join() method creates and returns a new string by concatenating all of the elements in an array (or an array-like object), separated by commas or a specified separator string. If the array has only one item, then that item will be returned without using the separator.
+    example:
+    `const cuisine = [
+    {
+      name: "Pizza",
+    },
+    {
+      name: "Sandwich",
+    },
+    {
+      name: "Pasta",
+    },
+    {
+      name: "Burger",
+    },
+    {
+      name: "Shake",
+    },
+  ]
+`
+    `<h4>{resData.info.cuisine.map(({ name }) => name).join(", ")}</h4>` - In the above example we are using map method to iterate over the cuisines array because it's an array of objects. The ({ name }) => name part is using destructuring to extract the name property from each object. and then we are using the join method to join the cuisines array with a comma.
+
+- # Q: What is Destructuring?
+
+  - Ans: Destructuring is a JavaScript expression that makes it possible to unpack values from arrays, or properties from objects, into distinct variables. That is, we can extract data from arrays and objects and assign them to variables. Destructuring is a convenient way of extracting multiple values from data stored in (possibly nested) objects and Arrays. It can be used in locations that receive data (such as the left-hand side of an assignment). Destructuring can also be used to pass an object as a parameter to a function that expects individual named parameters. Destructuring is fail-soft, similar to standard object lookup foo["bar"], producing undefined values when not found.
+
+- # Q: What is Optional Chaining?
+  - Ans: Optional chaining is a new feature in JavaScript that allows you to access nested objects without worrying if the property exists or not. It is denoted by a question mark (?.) and stops the evaluation if the object is null or undefined.
+
 # Let's Build The Application plan:
 
 - # Step 1 : Basic UI Structure
@@ -290,6 +321,7 @@ const RestaurantCard = ({ resName, cuisine, rating, deliveryTime }) => {
 - For now we are destructuring the image, name, cuisines, aggregate_rating, and average_cost_for_two properties from the resData object.
 - For the cuisine property, we are using the map method to iterate over the cuisines array because it's an array of objects. and then we are using the join method to join the cuisines array with a comma.
 - For now we are using just one restaurant data from the API. Later we will use the map method to iterate over the resObj array to display all the restaurant data.
+- `<h4>{resData.info.cuisine.map(({ name }) => name).join(", ")}</h4>` - In the above code we are using map method to iterate over the cuisines array because it's an array of objects. The ({ name }) => name part is using destructuring to extract the name property from each object. and then we are using the join method to join the cuisines array with a comma.
 
 - code:
 - Body component:
@@ -325,3 +357,68 @@ const RestaurantCard = (props) => {
   );
 };
 ```
+
+# Step 6 : Let's display all the restaurant data:
+
+- To display all the restaurants, there needs a small change in the API data. Right now our resObj object has only one restaurant data. But in real world scenario we will have multiple restaurant data and it will be an array of objects. So we will change the resObj object to an array of objects.
+- So let's use all the restaurant data from the API file `liveData.json`.
+- Now it's not an object anymore, it is a restaurant list. So we will change the name of the resObj object to resList and use it as props in the Body component.
+- `<div className="res-container">
+  <RestaurantCard resData={resList[1]} />
+   </div>`
+
+# Step 7 : Let's optimize the code using best practices:
+
+- Currently we are using bad practice of destructuring the props object in the RestaurantCard component.
+- We are repeating stuffs like `resData.info.name, resData.info.cuisine, resData.info.rating, resData.order.deliveryTime, resData.info.cft.text` in the RestaurantCard component.
+
+- So let's destructure using optional chaining in the RestaurantCard component. Using optional chaining because we are not sure if the data will be available or not.
+
+- code:
+
+```js
+const RestaurantCard = (props) => {
+  const { resData } = props;
+
+  const { image, name, cuisine, rating, cft } = resData?.info;
+  const { deliveryTime } = resData?.order;
+  return (
+    <div className="res-card">
+      <img className="res-img" src={image.url} alt="restaurant" />
+
+      <h3>{name}</h3>
+      <h4>{cuisine.map(({ name }) => name).join(", ")}</h4>
+      <h4>{rating.aggregate_rating} stars</h4>
+      <h4>{deliveryTime}</h4>
+      <h4>{cft.text}</h4>
+    </div>
+  );
+};
+```
+
+- Now let's use the map method to iterate over the resList array to display all the restaurant data.
+- code:
+
+```js
+const Body = () => {
+  return (
+    <div className="body">
+      <div className="search">Search</div>
+      <div className="res-container">
+        {resList.map((restaurant) => (
+          <RestaurantCard resData={restaurant} />
+        ))}
+      </div>
+    </div>
+  );
+};
+```
+
+- What we are doing here is we are iterating over the resList array using the map method and for each restaurant we are passing the restaurant data as props to the RestaurantCard component. So now we are displaying all the restaurant data in the RestaurantCard component. But we are getting a warning in the console that we need to add a key prop to the RestaurantCard component. So let's add a key prop to the RestaurantCard component. We will fix this issue by using the restaurant's unique id as the key prop.
+
+  `{resList.map((restaurant) => (
+  <RestaurantCard key={restaurant.info.resId} resData={restaurant} />
+))}`
+
+- Now we are not getting any warning in the console.
+- This warning is because React needs to keep track of the elements in the list. So we need to add a key prop to the RestaurantCard component. We will fix this issue by using the restaurant's unique id as the key prop. Because the key prop should be unique for each element in the list. If it is not unique then React will not be able to keep track of the elements in the list.

@@ -24,20 +24,28 @@
 .res-container {
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
+  margin: 3.6 rem 0px;
+  justify-content: flex-start;
 }
 
 .res-card {
-  width: 200px;
-  height: 400px;
-  padding: 5px;
-  margin: 5px;
-  border: 1px solid black;
+  width: 15rem;
+  overflow: hidden;
+  margin: 1rem;
+  padding: 1rem;
+  border-color: rgb(255, 255, 255);
+  border-radius: 1.5rem;
+  border: 0.1rem solid rgb(232, 232, 232);
 }
 
 .search {
-  padding: 10px;
+  padding: 20px;
 }
 
 .res-img {
+  cursor: pointer;
   width: 100%;
+  object-fit: cover;
+  border-radius: inherit;
 }
