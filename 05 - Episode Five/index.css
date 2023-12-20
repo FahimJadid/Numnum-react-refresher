@@ -39,10 +39,14 @@
   border: 0.1rem solid rgb(232, 232, 232);
 }
 
-.search {
+.filter {
   padding: 20px;
 }
 
+.filter-btn {
+  margin: 10px;
+  cursor: pointer;
+}
 .res-img {
   cursor: pointer;
   width: 100%;
