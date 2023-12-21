@@ -1,0 +1,55 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid red;
+}
+
+.logo {
+  width: 100px;
+  padding: 0px 20px;
+}
+
+.nav-items > ul {
+  display: flex;
+  font-size: 20px;
+  list-style-type: none;
+  padding: 0px 20px;
+}
+
+.nav-items > ul > li {
+  padding: 10px;
+  margin: 10px;
+}
+
+.res-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 3.6 rem 0px;
+  justify-content: flex-start;
+}
+
+.res-card {
+  width: 15rem;
+  overflow: hidden;
+  margin: 1rem;
+  padding: 1rem;
+  border-color: rgb(255, 255, 255);
+  border-radius: 1.5rem;
+  border: 0.1rem solid rgb(232, 232, 232);
+}
+
+.filter {
+  padding: 20px;
+}
+
+.filter-btn {
+  margin: 10px;
+  cursor: pointer;
+}
+.res-img {
+  cursor: pointer;
+  width: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
