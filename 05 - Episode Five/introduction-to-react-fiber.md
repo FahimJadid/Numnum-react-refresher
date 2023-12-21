@@ -35,23 +35,20 @@ Scheduling can be time-based or priority-based. The updates should be scheduled 
 
 _requestAnimationFrame_ schedules the high-priority function to be called before the next animation frame. Similarly, _requestIdleCallback_ schedules the low-priority or non-essential function to be called in the free time at the end of the frame.
 
-|     | requestIdleCallback(lowPriorityWork); |
-| --- | ------------------------------------- |
-
-[view raw](https://gist.github.com/velotiotech/fd8da18270f04643bc448cdd2486ced2/raw/85905fcd185f4903620ce75721728d42a1b4d5bb/request-idle-callback-usage.js) [request-idle-callback-usage.js](https://gist.github.com/velotiotech/fd8da18270f04643bc448cdd2486ced2#file-request-idle-callback-usage-js) hosted with ❤ by [GitHub](https://github.com/)
+```js
+requestIdleCallback(lowPriorityWork);
+```
 
 This shows the usage of _requestIdleCallback_. _lowPriorityWork_ is a callback function that will be called in the free time at the end of the frame.
 
-|     | function lowPriorityWork(deadline) {                        |
-| --- | ----------------------------------------------------------- |
-|     | while (deadline.timeRemaining() > 0 && workList.length > 0) |
-|     | performUnitOfWork();                                        |
-|     |                                                             |
-|     | if (workList.length > 0)                                    |
-|     | requestIdleCallback(lowPriorityWork);                       |
-|     | }                                                           |
+```js
+function lowPriorityWork(deadline) {
+  while (deadline.timeRemaining() > 0 && workList.length > 0)
+    performUnitOfWork();
 
-[view raw](https://gist.github.com/velotiotech/80b97a2b18b0926b9a601a0ea5fdea2a/raw/fe4372bbe0ac9a4ad5e15d2ec8a059fdbf18d861/request-idle-callback.js) [request-idle-callback.js](https://gist.github.com/velotiotech/80b97a2b18b0926b9a601a0ea5fdea2a#file-request-idle-callback-js) hosted with ❤ by [GitHub](https://github.com/)
+  if (workList.length > 0) requestIdleCallback(lowPriorityWork);
+}
+```
 
 When this callback function is called, it gets the argument _deadline_ object. As you can see in the snippet above, the _timeRemaining_ function returns the latest idle time remaining. If this time is greater than zero, we can do the work needed. And if the work is not completed, we can schedule it again at the last line for the next frame.
 
@@ -63,25 +60,24 @@ A _fiber_(lowercase ‘f’) is a simple JavaScript object. It represents the Re
 
 This example shows a simple React component that renders in _root_ div.
 
-|     | function App() {                                           |
-| --- | ---------------------------------------------------------- |
-|     | return (                                                   |
-|     | <div className="wrapper">                                  |
-|     | <div className="list">                                     |
-|     | <div className="list_item">List item A</div>               |
-|     | <div className="list_item">List item B</div>               |
-|     | </div>                                                     |
-|     | <div className="section">                                  |
-|     | <button>Add</button>                                       |
-|     | <span>No. of items: 2</span>                               |
-|     | </div>                                                     |
-|     | </div>                                                     |
-|     | );                                                         |
-|     | }                                                          |
-|     |                                                            |
-|     | ReactDOM.render(<App />, document.getElementById('root')); |
+```js
+function App() {
+  return (
+    <div className="wrapper">
+      <div className="list">
+        <div className="list_item">List item A</div>
+        <div className="list_item">List item B</div>
+      </div>
+      <div className="section">
+        <button>Add</button>
+        <span>No. of items: 2</span>
+      </div>
+    </div>
+  );
+}
 
-[view raw](https://gist.github.com/velotiotech/26880a88f350aca25a713b02acfa7a31/raw/bfa28c33adf75f47e5be239a9d48f0f68f035f82/gistfile1.txt) [gistfile1.txt](https://gist.github.com/velotiotech/26880a88f350aca25a713b02acfa7a31#file-gistfile1-txt) hosted with ❤ by [GitHub](https://github.com/)
+ReactDOM.render(<App />, document.getElementById("root"));
+```
 
 It's a simple component that shows a list of items for the data we have got from the component state. (I have replaced the _.map_ and iteration over data with two list items just to make this example look simpler.) There is also a button and the span,which shows the number of list items.
 
@@ -91,77 +87,6 @@ It creates a fiber for each individual React element, like in the example above.
 
 In the later section, we will see how it iterates and the final structure of the tree. **Though we call it a tree, React Fiber creates a linked list of nodes where each node is a fiber.** And there is a relationship between parent, child, and siblings. React uses a _return_ key to point to the parent node, where any of the children fiber should return after completion of work. So, in the above example, _LA's_ return is _L_, and the sibling is _LB_.
 
-So, how does this fiber object actually look?
-
-Below is the definition of _type,_ as defined in the React codebase. _I have removed some extra props and kept some comments to understand the meaning of the properties. You can find the detailed structure in the [React codebase](https://github.com/facebook/react/blob/master/packages/react-reconciler/src/ReactInternalTypes.js#L49)._
-
-|     | export type Fiber = {                                                           |
-| --- | ------------------------------------------------------------------------------- | --------------------------------------------------------- | ---------- |
-|     | // Tag identifying the type of fiber.                                           |
-|     | tag: TypeOfWork,                                                                |
-|     |                                                                                 |
-|     | // Unique identifier of this child.                                             |
-|     | key: null                                                                       | string,                                                   |
-|     |                                                                                 |
-|     | // The value of element.type which is used to preserve the identity during      |
-|     | // reconciliation of this child.                                                |
-|     | elementType: any,                                                               |
-|     |                                                                                 |
-|     | // The resolved function/class/ associated with this fiber.                     |
-|     | type: any,                                                                      |
-|     |                                                                                 |
-|     | // The local state associated with this fiber.                                  |
-|     | stateNode: any,                                                                 |
-|     |                                                                                 |
-|     | // Remaining fields belong to Fiber                                             |
-|     |                                                                                 |
-|     | // The Fiber to return to after finishing processing this one.                  |
-|     | // This is effectively the parent.                                              |
-|     | // It is conceptually the same as the return address of a stack frame.          |
-|     | return: Fiber                                                                   | null,                                                     |
-|     |                                                                                 |
-|     | // Singly Linked List Tree Structure.                                           |
-|     | child: Fiber                                                                    | null,                                                     |
-|     | sibling: Fiber                                                                  | null,                                                     |
-|     | index: number,                                                                  |
-|     |                                                                                 |
-|     | // The ref last used to attach this node.                                       |
-|     | ref: null                                                                       | (((handle: mixed) => void) & {\_stringRef: ?string, ...}) | RefObject, |
-|     |                                                                                 |
-|     | // Input is the data coming into process this fiber. Arguments. Props.          |
-|     | pendingProps: any, // This type will be more specific once we overload the tag. |
-|     | memoizedProps: any, // The props used to create the output.                     |
-|     |                                                                                 |
-|     | // A queue of state updates and callbacks.                                      |
-|     | updateQueue: mixed,                                                             |
-|     |                                                                                 |
-|     | // The state used to create the output                                          |
-|     | memoizedState: any,                                                             |
-|     |                                                                                 |
-|     | mode: TypeOfMode,                                                               |
-|     |                                                                                 |
-|     | // Effect                                                                       |
-|     | effectTag: SideEffectTag,                                                       |
-|     | subtreeTag: SubtreeTag,                                                         |
-|     | deletions: Array<Fiber>                                                         | null,                                                     |
-|     |                                                                                 |
-|     | // Singly linked list fast path to the next fiber with side-effects.            |
-|     | nextEffect: Fiber                                                               | null,                                                     |
-|     |                                                                                 |
-|     | // The first and last fiber with side-effect within this subtree. This allows   |
-|     | // us to reuse a slice of the linked list when we reuse the work done within    |
-|     | // this fiber.                                                                  |
-|     | firstEffect: Fiber                                                              | null,                                                     |
-|     | lastEffect: Fiber                                                               | null,                                                     |
-|     |                                                                                 |
-|     | // This is a pooled version of a Fiber. Every fiber that gets updated will      |
-|     | // eventually have a pair. There are cases when we can clean up pairs to save   |
-|     | // memory if we need to.                                                        |
-|     | alternate: Fiber                                                                | null,                                                     |
-|     | };                                                                              |
-
-[view raw](https://gist.github.com/velotiotech/e479e75fe701d21d5c21ff3955203a35/raw/153b39a765e8dca79ae82408e2d7dff50a40d870/React-Fiber-type-defs.ts) [React-Fiber-type-defs.ts](https://gist.github.com/velotiotech/e479e75fe701d21d5c21ff3955203a35#file-react-fiber-type-defs-ts) hosted with ❤ by [GitHub](https://github.com/)
-
 ## How does React Fiber work?
 
 Next, we will see how the React Fiber creates the linked list tree and what it does when there is an update.
@@ -170,7 +95,7 @@ Before that, let’s explain what a _current_ tree and _workInProgress_ tree is 
 
 The tree, which is currently flushed to render the UI, is called _current_. It’s one that was used to render the current UI. Whenever there is an update, Fiber builds a _workInProgress_ tree, which is created from the updated data from the React elements. React performs work on this _workInProgress_ tree and uses this updated tree for the next render. Once this _workInProgress_ tree is rendered on the UI, it becomes the _current_ tree.
 
-![An%20Introduction%20to%20React%20Fiber%20-%20The%20Algorithm%20Beh%20441aa4c03c73441b853e3707c835fa62/5f604fd80b9cb018d27eeda5_UsoMdBUqB9kLNWjrraBggD3QUb-fuTlKw_u6h_vBx5OnMHZnxTYUQcaoZa_nP9fwCA1nWLEvAnAnlwjMDg2io4z7DPJ5LA8K7qSwTs4_rBJHVuZQrEX-TZOzzOPyhN7FEncG91vy.png](An%20Introduction%20to%20React%20Fiber%20-%20The%20Algorithm%20Beh%20441aa4c03c73441b853e3707c835fa62/5f604fd80b9cb018d27eeda5_UsoMdBUqB9kLNWjrraBggD3QUb-fuTlKw_u6h_vBx5OnMHZnxTYUQcaoZa_nP9fwCA1nWLEvAnAnlwjMDg2io4z7DPJ5LA8K7qSwTs4_rBJHVuZQrEX-TZOzzOPyhN7FEncG91vy.png)
+![Alt text](image-1.png)
 
 Fig:- Current and workInProgress trees
 
@@ -185,13 +110,35 @@ Fiber tree traversal happens like this:
 
 Every fiber has a child (or a null value if there is no child), sibling, and parent property (as you have seen the structure of fiber in the earlier section). These are the pointers in the Fiber to work as a linked list.
 
-![An%20Introduction%20to%20React%20Fiber%20-%20The%20Algorithm%20Beh%20441aa4c03c73441b853e3707c835fa62/5f604fd7499e615f640d6cbc_KQaSAOA-kuBAxQyKNRtqr9wUlG1eJ1ms4oxvdG7jBy9-ktQKQhkUriadbYA503iZ_HJhHblJQHZ_bSHPe5V56w7_lOUqLZzrN01BjyjgzU6-WTvcxPZovIICFZoNoBUjPUARYw-K.png](An%20Introduction%20to%20React%20Fiber%20-%20The%20Algorithm%20Beh%20441aa4c03c73441b853e3707c835fa62/5f604fd7499e615f640d6cbc_KQaSAOA-kuBAxQyKNRtqr9wUlG1eJ1ms4oxvdG7jBy9-ktQKQhkUriadbYA503iZ_HJhHblJQHZ_bSHPe5V56w7_lOUqLZzrN01BjyjgzU6-WTvcxPZovIICFZoNoBUjPUARYw-K.png)
-
+![Alt text](image-2.png)
 Fig:- React Fiber tree traversal
 
 ‍
 
 Let’s take the same example, but let’s name the fibers that correspond to the specific React elements.
+
+```js
+function App() {
+  // App
+  return (
+    <div className="wrapper">
+      {" "}
+      // W<div className="list">
+        {" "}
+        // L<div className="list_item">List item A</div> // LA
+        <div className="list_item">List item B</div> // LB
+      </div>
+      <div className="section">
+        {" "}
+        // S<button>Add</button> // SB
+        <span>No. of items: 2</span> // SS
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.render(<App />, document.getElementById("root")); // HostRoot
+```
 
 First, we will quickly cover the mounting stage where the tree is created, and after that, we will see the detailed logic behind what happens after any update.
 
@@ -207,7 +154,7 @@ So, as shown in the example, it creates a fiber _App_. Going further, it creates
 
 So, this is how the final fiber tree will look.
 
-‍
+‍![Alt text](image-3.png)
 
 This is how the nodes of a tree are connected using the child, sibling, and return pointers.
 
