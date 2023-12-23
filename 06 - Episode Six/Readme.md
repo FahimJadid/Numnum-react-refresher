@@ -185,3 +185,51 @@
   | Modification | Small changes introduce greater risks as they impact the entire code base.                                        | You can modify individual microservices without impacting the entire application.                                                                                    |
   | Scale        | You have to scale the entire application, even if only certain functional areas experience an increase in demand. | You can scale individual microservices as required, which saves overall scaling costs.                                                                               |
   | Investment   | Low upfront investment at the cost of increased ongoing and maintenance efforts.                                  | Additional time and cost investment to set up the required infrastructure and build team competency. However, long-term cost savings, maintenance, and adaptability. |
+
+### Building the app with Real API Data:
+
+# Page Loads => Render => Fetch Data/API call => Render
+
+- In react when the page loads it renders the page and then it fetches the data from the API and then it renders the data. Benefits of this is that the page loads faster and then the data is rendered. The user experience is better because the user doesn't have to wait for the data to load.
+
+- In previous episode we used useState hook. But in this episode we are going to use useEffect hook to fetch the data from the API and then render it.
+
+# step 1: Introduction to useEffect hook:
+
+- useEffect hook is used to fetch the data from the API and then render it. It is used to perform side effects in functional components. It is a function that takes two arguments. First argument is a function and second argument is an array. The function is called when the component is rendered. The array is used to specify the dependencies. If the array is empty then the function is called only once when the component is rendered. If the array is not empty then the function is called when the component is rendered and when the dependencies change.
+
+- Let's use it in the Body component of our app. To use hooks we need to import it from react. We need to get familiar with the syntax
+
+  ```js
+  import { useState, useEffect } from "react";
+
+  useEffect(() => {
+    console.log("useEffect is called");
+  }, []);
+  ```
+
+- So when the Body component is rendered the useEffect function is called. As soon as the render cycle is completed the useEffect function will call the callback function. The callback function will console log the message. The second argument is an empty array which is called dependency array. So the callback function will be called only once when the component is rendered. This is how the useEffect hook works. So whenever you want to do something after rendering the component you can write it inside the useEffect hook.
+
+- So for test if i put a console log outside the useEffect hook and then i go to the browser and refresh the page. what should be in the console first? The console log outside the useEffect should be first and then the console log inside the useEffect should be called.
+
+- So now we are going to fetch the data from the API and then render it.
+
+```js
+useEffect(() => {
+  fetchData();
+}, []);
+
+const fetchData = async () => {
+  const data = await fetch(
+    "https://www.zomato.com/webroutes/getPage?page_url=/kolkata/restaurants?place_name=College+Street&dishv2_id=30308&location=&isMobile=1"
+  );
+  const json = await data.json();
+  console.log(json);
+};
+```
+
+- We have created a function called fetchData. Inside the function we are fetching the data from the API. We are using the fetch method to fetch the data. We are using the await keyword to wait for the data to be fetched. Then we are converting the data into json format. Then we are console logging the json data. Now we need to call the fetchData function inside the useEffect hook. So when the component is rendered the fetchData function will be called and it will fetch the data from the API and then it will console log the data.
+
+- Now we want to update the UI with the fetched data from the API instead of using the fixed data. We want to render our component with the new data.
+
+- So i need to put my new data in the listOfRestaurants array. So when my listOfRestaurants updates react will re-render the component with the new data automatically.
