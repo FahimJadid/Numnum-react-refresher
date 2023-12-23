@@ -233,3 +233,90 @@ const fetchData = async () => {
 - Now we want to update the UI with the fetched data from the API instead of using the fixed data. We want to render our component with the new data.
 
 - So i need to put my new data in the listOfRestaurants array. So when my listOfRestaurants updates react will re-render the component with the new data automatically.
+
+- updated code:
+
+```js
+import { useEffect, useState } from "react";
+import RestaurantCard from "./RestaurantCard";
+import resList from "./../Utils/mockData";
+
+const Body = () => {
+  const [listOfRestaurants, setListOfRestaurants] = useState(resList);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const data = await fetch(
+        "https://www.zomato.com/webroutes/getPage?page_url=/kolkata/restaurants?place_name=College+Street&dishv2_id=30308&location=&isMobile=1"
+        // "https://www.zomato.com/webroutes/getPage?page_url=/kolkata/must-visit-restaurants&location=&isMobile=1"
+        // "https://www.zomato.com/webroutes/search/kolkata"
+        // "https://www.zomato.com/webroutes/getPage?page_url=/kolkata/order-food-online?delivery_subzone=1400"
+        // "https://www.zomato.com/webroutes/getPage?page_url=/kolkata/"
+        // "https://www.zomato.com/webroutes/search/autoSuggest?addressId=0&entityId=2&entityType=city&locationType=&isOrderLocation=1&cityId=2&latitude=22.5726460000000000&longitude=88.3638950000000000&userDefinedLatitude=22.572646&userDefinedLongitude=88.363895&entityName=Kolkata&orderLocationName=Kolkata&cityName=Kolkata&countryId=1&countryName=India&displayTitle=Kolkata&o2Serviceable=true&placeId=1400&cellId=4180033504081346560&deliverySubzoneId=1400&placeType=DSZ&placeName=Kolkata&isO2City=true&fetchFromGoogle=false&fetchedFromCookie=true&&isO2OnlyCity=false&addressBlocker=0&&otherRestaurantsUrl=&q=resta&context=&searchMetadata={}"
+      );
+      const json = await data.json();
+      if (
+        json &&
+        json.page_data &&
+        json.page_data.sections &&
+        json.page_data.sections.SECTION_SEARCH_RESULT
+      ) {
+        setListOfRestaurants(json.page_data.sections.SECTION_SEARCH_RESULT);
+        // console.log(
+        //   "First restaurant's resId:",
+        //   json.page_data.sections.SECTION_SEARCH_RESULT[0]?.info?.resId
+        // );
+      } else {
+        console.error("Invalid data structure in the fetched data");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  return (
+    <div className="body">
+      <div className="filter">
+        <button
+          onClick={() => {
+            const filteredResList = listOfRestaurants.filter((res) => {
+              return Number(res?.info?.rating?.aggregate_rating) >= 4.2;
+            });
+            setListOfRestaurants(filteredResList);
+          }}
+          className="filter-btn"
+        >
+          Top Rated Restaurants
+        </button>
+      </div>
+      <div className="res-container">
+        {listOfRestaurants?.map((restaurant) => {
+          const resId = restaurant?.info?.resId;
+          if (resId) {
+            return <RestaurantCard key={resId} resData={restaurant} />;
+          }
+          return null;
+        })}
+      </div>
+    </div>
+  );
+};
+
+export default Body;
+```
+
+- Now let's discuss what we have done in our updated code and how we did it:
+- We have imported the useState and useEffect hooks from react. We have imported the mock data from the Utils folder for the first render to show something to the user. We have created a state called listOfRestaurants and we have set the initial value of the state to the mock data.
+- We have created a useEffect hook. Inside the useEffect hook we have created a function called fetchData. Inside the fetchData function we are fetching the data from the API. We are using the fetch method to fetch the data. We are using the await keyword to wait for the data to be fetched.
+- Then we are converting the data into json format. Then we are console logging the json data.
+- Now we need to call the fetchData function inside the useEffect hook. So when the component is rendered the fetchData function will be called and it will fetch the data from the API.
+- We have created a try catch block to handle the error. We have used the if statement to check if the data is valid. If the data is valid then we are setting the listOfRestaurants state to the fetched data. We are using the setListOfRestaurants function to set the listOfRestaurants state.
+- We are using the json.page_data.sections.SECTION_SEARCH_RESULT to get the data from the API.
+- We are using the else statement to console log the error if the data is invalid. We are using the catch block to console log the error if the data is invalid.
+- We are using the return statement to return the data from the API. We are using the map method to map through the data.
+- We are using the if statement to check if the resId is valid. If the resId is valid then we are returning the RestaurantCard component.
+- We are passing the resId as a key and the restaurant data as a prop to the RestaurantCard component. We are using the return statement to return the RestaurantCard component. We are using the return statement to return null if the resId is invalid.
