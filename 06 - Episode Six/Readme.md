@@ -186,6 +186,17 @@
   | Scale        | You have to scale the entire application, even if only certain functional areas experience an increase in demand. | You can scale individual microservices as required, which saves overall scaling costs.                                                                               |
   | Investment   | Low upfront investment at the cost of increased ongoing and maintenance efforts.                                  | Additional time and cost investment to set up the required infrastructure and build team competency. However, long-term cost savings, maintenance, and adaptability. |
 
+- # Q: What is Shimmer UI?
+
+  - Ans: A better way to show loading states is to use a shimmer UI. A shimmer UI is a version of the UI that doesn’t contain actual content, but instead mimics the layout and shapes of the content that will eventually appear. It uses a gradient animation that creates a shimmering effect over the placeholders, giving the user a sense of motion and progress.
+
+  `A shimmer UI has many benefits over traditional loading indicators:`
+
+  - It improves the perceived performance of the app by making it seem faster and more responsive.
+  - It reduces the cognitive load on the user by providing visual cues about the type and structure of the content that is being loaded.
+  - It eliminates surprises and confusion by showing a consistent and predictable UI before and after loading.
+  - It enhances the aesthetic appeal and user satisfaction by creating a smooth and elegant transition from loading to loaded.
+
 ### Building the app with Real API Data:
 
 # Page Loads => Render => Fetch Data/API call => Render
@@ -320,3 +331,66 @@ export default Body;
 - We are using the return statement to return the data from the API. We are using the map method to map through the data.
 - We are using the if statement to check if the resId is valid. If the resId is valid then we are returning the RestaurantCard component.
 - We are passing the resId as a key and the restaurant data as a prop to the RestaurantCard component. We are using the return statement to return the RestaurantCard component. We are using the return statement to return null if the resId is invalid.
+- We used optional chaining to check if the data is valid or not. If the data is valid then it will return the data otherwise it will return undefined. We used optional chaining to avoid the error. It is good practice to use optional chaining when you are fetching data from the API because we don't know if the data is valid or not. So we need to check if the data is valid or not. If the data is valid then we can use the data otherwise we can use the default value.
+
+- Now let's remove the mock data and make the initial listOfRestaurants empty. We don't need the mock data anymore.
+
+```js
+const [listOfRestaurants, setListOfRestaurants] = useState([]);
+```
+
+```js
+{
+  listOfRestaurants?.map((restaurant) => {
+    const resId = restaurant?.info?.resId;
+    if (resId) {
+      return <RestaurantCard key={resId} resData={restaurant} />;
+    }
+    return null;
+  });
+}
+```
+
+- The reason behind we use this if/else for the resId is because we don't want to render the component if the resId is invalid.
+- There was a chance that the resId could be invalid. because the API data we are using is not perfect. Between the restaurant list there are some other data as well. So we need to check if the resId is valid or not. If the resId is valid then we can render the component otherwise we can't render the component. So we are using the if statement to check if the resId is valid. If the resId is valid then we are returning the RestaurantCard component. We are passing the resId as a key and the restaurant data as a prop to the RestaurantCard component. We are using the return statement to return the RestaurantCard component. We are using the return statement to return null if the resId is invalid.
+
+# step 2: Improve the UI experience:
+
+- Let's improve the UI experience. We are going to add a loading spinner or a shimmer effect to the app. So when the data is fetching from the API the loading spinner or the shimmer effect will be shown to the user so that user knows that the data is loading. When the data is loaded the loading spinner or the shimmer effect will be removed and the data will be shown to the user.
+
+- So the logic will be like this, unless i have the data i will show the loading spinner or the shimmer effect. When i have the data i will remove the loading spinner or the shimmer effect and i will show the data to the user.
+
+- I will write a condition that if my listOfRestaurants is empty suppose we don't have any data instead of rendering empty array we will render the loading spinner or the shimmer effect. When we have the data we will render the data.
+
+- code:
+
+```js
+if (listOfRestaurants.length === 0) {
+  return <h1>Loading...</h1>;
+}
+```
+
+- Using loading spinner is not a good idea because it is not good for the user experience. So we are going to use the shimmer effect instead of the loading spinner.
+- A shimmer UI is a version of the UI that doesn’t contain actual content, but instead mimics the layout and shapes of the content that will eventually appear. It uses a gradient animation that creates a shimmering effect over the placeholders, giving the user a sense of motion and progress.
+
+- create a Shimmer component:
+
+```js
+const Shimmer = () => {
+  return (
+    <div className="shimmer-container">
+      <div className="shimmer"></div>
+    </div>
+  );
+};
+
+export default Shimmer;
+```
+
+- Import and use the Shimmer component in the Body component:
+
+```js
+if (listOfRestaurants.length === 0) {
+  return <Shimmer />;
+}
+```

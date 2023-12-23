@@ -37,6 +37,7 @@
   border-color: rgb(255, 255, 255);
   border-radius: 1.5rem;
   border: 0.1rem solid rgb(232, 232, 232);
+  position: relative;
 }
 
 .filter {
@@ -52,4 +53,33 @@
   width: 100%;
   object-fit: cover;
   border-radius: inherit;
+}
+
+/* Shimmer.css */
+.shimmer-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.shimmer {
+  width: 15rem;
+  height: 27rem;
+  overflow: hidden;
+  margin: 1rem;
+  padding: 1rem;
+  border-color: rgb(255, 255, 255);
+  border-radius: 1.5rem;
+  border: 0.1rem solid rgb(232, 232, 232);
+  position: relative;
+  background: linear-gradient(-90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  animation: shimmerAnimation 1.5s infinite;
+}
+
+@keyframes shimmerAnimation {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
