@@ -388,9 +388,41 @@ export default Shimmer;
 ```
 
 - Import and use the Shimmer component in the Body component:
+- Add CSS Stylying to the Shimmer component:
 
 ```js
+// conditional rendering
 if (listOfRestaurants.length === 0) {
   return <Shimmer />;
 }
 ```
+
+- Conditional rendering is a term to describe the ability to render different user interface (UI) markup if a condition is true or false. In React, conditional rendering is done the same way conditions are handled in JavaScript. Use JavaScript operators like if or the conditional operator to create elements representing the current state, and let React update the UI to match them.
+
+- Conditional rendering using ternary operator to render the Shimmer component:
+
+```js
+  return listOfRestaurants.length === 0 ? (
+    <Shimmer />
+  ) : (
+    <div className="body">
+  )
+```
+
+- # step 3: Add the simple Login and Sign up:
+
+- We have created a Login toggle switch. When user clicks it becomes Logout and when user clicks it again it becomes Login. 
+
+```js
+const [isLogin, setLogin] = useState("Login");
+
+<button
+  className="btn login"
+  onClick={() => {
+    isLogin === "Login" ? setLogin("Logout") : setLogin("Login");
+  }}
+>
+  {isLogin}
+</button>;
+```
+- We have created a state called isLogin. We have set the initial value of the state to "Login". We have created a button. We have added a className called login to the button. We have added an onClick event handler to the button. We have used the ternary operator to toggle the button. If the isLogin state is equal to "Login" then the button will show "Login" otherwise the button will show "Logout". We have used the setLogin function to set the isLogin state. We have used the onClick event handler to toggle the button. If the user clicks the button then the isLogin state will be set to "Logout" otherwise the isLogin state will be set to "Login".

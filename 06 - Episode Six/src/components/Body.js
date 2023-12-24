@@ -22,12 +22,14 @@ const Body = () => {
     }
   };
 
-  // // Shimmer or Loading Screen
+  // // Shimmer or Loading Screen using conditional rendering
   // if (listOfRestaurants.length === 0) {
   //   return <Shimmer />;
   // }
 
-  return (
+  return listOfRestaurants.length === 0 ? (
+    <Shimmer />
+  ) : (
     <div className="body">
       <div className="filter">
         <button
