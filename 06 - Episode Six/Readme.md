@@ -490,3 +490,132 @@ const [searchText, setSearchText] = useState("");
 ```
 
 - We have used the filter method to filter the listOfRestaurants. We have used the includes method to check if the searchText is included in the restaurant name. If the searchText is included in the restaurant name then it will return true otherwise it will return false. If it returns true then it will return the restaurant otherwise it will not return the restaurant. We have used the setListOfRestaurants function to set the listOfRestaurants state to the filteredRestaurant.
+
+- Now there is an issue. When we search for something for a second time it will not show the data. It will show the loading spinner or the shimmer effect. Because we are setting the listOfRestaurants state to the filteredRestaurant.
+  So we lost the previous data and it was updated with the new filtered data.
+
+- So we need to fix this issue. We will create another state variable called filteredRestaurants. We will set the initial value of the state to empty array. We will use the filteredRestaurants state variable to store the filtered data. We will use the setFilteredRestaurants function to set the filteredRestaurants state variable to the filtered data. And instead of updating our setListOfRestaurants state variable we will update our setFilteredRestaurants state variable. And when we will render it we will render the filteredRestaurants state variable instead of the listOfRestaurants state variable.
+
+- code:
+
+  ```js
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+
+  setFilteredRestaurants(filteredRestaurant);
+
+  {
+    filteredRestaurants?.map((restaurant) => {
+      const resId = restaurant?.info?.resId;
+      if (resId) {
+        return <RestaurantCard key={resId} resData={restaurant} />;
+      }
+      return null;
+    });
+  }
+  ```
+
+```js
+import { useEffect, useState } from "react";
+import RestaurantCard from "./RestaurantCard";
+import Shimmer from "./Shimmer";
+
+const Body = () => {
+  const [listOfRestaurants, setListOfRestaurants] = useState([]);
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const data = await fetch(
+        "https://www.zomato.com/webroutes/getPage?page_url=/kolkata/restaurants?place_name=College+Street&dishv2_id=30308&location=&isMobile=1"
+      );
+      const json = await data.json();
+
+      setListOfRestaurants(json?.page_data?.sections?.SECTION_SEARCH_RESULT);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  // // Shimmer or Loading Screen using conditional rendering
+  // if (listOfRestaurants.length === 0) {
+  //   return <Shimmer />;
+  // }
+
+  return listOfRestaurants.length === 0 ? (
+    <Shimmer />
+  ) : (
+    <div className="body">
+      <div className="filter">
+        <div className="search">
+          <input
+            type="search"
+            value={searchText}
+            onChange={(e) => {
+              setSearchText(e.target.value);
+            }}
+            className="search-box"
+          />
+          <button
+            onClick={() => {
+              console.log(searchText);
+              const filteredRes = listOfRestaurants.filter((res) => {
+                return res?.info?.name
+                  .toLowerCase()
+                  .includes(searchText.toLowerCase());
+              });
+              setFilteredRestaurants(filteredRes);
+            }}
+          >
+            Search
+          </button>
+        </div>
+        <button
+          onClick={() => {
+            const filteredResList = listOfRestaurants.filter((res) => {
+              return Number(res?.info?.rating?.aggregate_rating) >= 4.2;
+            });
+            setListOfRestaurants(filteredResList);
+          }}
+          className="filter-btn"
+        >
+          Top Rated Restaurants
+        </button>
+      </div>
+
+      <div className="res-container">
+        {filteredRestaurants?.map((restaurant) => {
+          const resId = restaurant?.info?.resId;
+          if (resId) {
+            return <RestaurantCard key={resId} resData={restaurant} />;
+          }
+          return null;
+        })}
+      </div>
+    </div>
+  );
+};
+
+export default Body;
+```
+
+- Slight update: Due to conflict naming changed filteredRestaurant to filteredRes..
+- Also there is one thing, if you refresh the page now you will see the shimmer effect. Because we are setting the filteredRestaurants state to empty array. So we need to fix this issue.
+
+```js
+<button
+  onClick={() => {
+    console.log(searchText);
+    const filteredRes = listOfRestaurants.filter((res) => {
+      return res?.info?.name.toLowerCase().includes(searchText.toLowerCase());
+    });
+    setFilteredRestaurants(filteredRes);
+  }}
+>
+  Search
+</button>
+```
