@@ -411,7 +411,7 @@ if (listOfRestaurants.length === 0) {
 
 - # step 3: Add the simple Login and Sign up:
 
-- We have created a Login toggle switch. When user clicks it becomes Logout and when user clicks it again it becomes Login. 
+- We have created a Login toggle switch. When user clicks it becomes Logout and when user clicks it again it becomes Login.
 
 ```js
 const [isLogin, setLogin] = useState("Login");
@@ -425,4 +425,68 @@ const [isLogin, setLogin] = useState("Login");
   {isLogin}
 </button>;
 ```
+
 - We have created a state called isLogin. We have set the initial value of the state to "Login". We have created a button. We have added a className called login to the button. We have added an onClick event handler to the button. We have used the ternary operator to toggle the button. If the isLogin state is equal to "Login" then the button will show "Login" otherwise the button will show "Logout". We have used the setLogin function to set the isLogin state. We have used the onClick event handler to toggle the button. If the user clicks the button then the isLogin state will be set to "Logout" otherwise the isLogin state will be set to "Login".
+
+- # step 4: Implementation of Search functionality:
+
+- code:
+
+```js
+<div className="search">
+  <input type="search" value="" className="search-box" />
+  <button onClick={() => {}}>Search</button>
+</div>
+```
+
+- We have created a div with a className called search. We have created an input field with a className called search-box. We have created a button with an onClick event handler. The input filed is an important part of the search functionality. We have used the onClick event handler to handle the search functionality. When the user clicks the button we would implement the filter for restaurant cards and update the UI.
+- So where will i get the search text from? I will be needed the search text from the input field. To get that data from the input field we need to take the value from the input field and also need to bind this input field to a local state variable to track the value of the input field, whatever the user is typing.
+- So we need to create one more state variable called searchText. We need to set the initial value of the state to empty string. And we will bind the searchText state variable to the input field value attribute. So whatever the user is typing in the input field it will be stored in the searchText state variable.
+
+- But here is an issue, when we change the value of the input field, the value of input field is not changing and it is still fixed to the searchText. So my searchText is not getting updated but we are trying to modify our input field. Because value attribute is bind to the searchText and the searchText is empty so this input field will not change unless we change the searchText.
+
+- So to fix this we will write an onChange Handler. So whenever the user types something in the input field the onChange Handler will be called and it will update the searchText state variable. So the value of the input field will be updated and it will be bind to the searchText state variable.
+
+- To update the searchText we will get the new value from the callback method with the event object. We will use the event object to get the new value from the input field. We will use the set function to update the searchText state variable. We will use the set function to update the searchText state variable with the new value from the input field.
+
+- code:
+
+```js
+const [searchText, setSearchText] = useState("");
+
+<div className="search">
+  <input
+    type="search"
+    value={searchText}
+    onChange={(e) => {
+      setSearchText(e.target.value);
+    }}
+    className="search-box"
+  />
+  <button
+    onClick={() => {
+      console.log(searchText);
+    }}
+  >
+    Search
+  </button>
+</div>;
+```
+
+- Now let's Update the UI with the filtered listOfRestaurants
+
+```js
+<button
+  onClick={() => {
+    console.log(searchText);
+    const filteredRestaurant = listOfRestaurants.filter((res) => {
+      return res?.info?.name.toLowerCase().includes(searchText.toLowerCase());
+    });
+    setListOfRestaurants(filteredRestaurant);
+  }}
+>
+  Search
+</button>
+```
+
+- We have used the filter method to filter the listOfRestaurants. We have used the includes method to check if the searchText is included in the restaurant name. If the searchText is included in the restaurant name then it will return true otherwise it will return false. If it returns true then it will return the restaurant otherwise it will not return the restaurant. We have used the setListOfRestaurants function to set the listOfRestaurants state to the filteredRestaurant.
