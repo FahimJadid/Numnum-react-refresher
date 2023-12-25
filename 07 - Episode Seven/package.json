@@ -1,0 +1,33 @@
+{
+  "name": "02---episode-two",
+  "version": "1.0.0",
+  "description": "React Episode Two",
+  "main": "App.js",
+  "scripts": {
+    "test": "jest",
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FahimJadid/react-refresher.git"
+  },
+  "keywords": [
+    "React"
+  ],
+  "author": "Fahim Al Jadid",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FahimJadid/react-refresher/issues"
+  },
+  "homepage": "https://github.com/FahimJadid/react-refresher#readme",
+  "devDependencies": {
+    "parcel": "^2.10.3",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
