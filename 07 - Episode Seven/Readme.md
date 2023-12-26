@@ -40,6 +40,16 @@
 
   - Ans: We don't use anchor tags in react because anchor tags are used to navigate to different pages, and react is a single page application, if we use anchor tags, the page will be reloaded, and the state of the application will be lost. So, we don't use anchor tags in react.
 
+- # Q: Routing in an application?
+
+  - Ans: There are two types of routing in an application.
+
+    1. Client side routing: Client side routing is used in single page applications. In client side routing, whenever we click on a link, the request is not sent to the server, and the page is not reloaded. The client is responsible for routing in client side routing.
+
+    In the single page application just the components are changed without any network calls via client side routing.
+
+    2. Server side routing: Server side routing is used in traditional web applications. In server side routing, whenever we click on a link, the request is sent to the server, and the server sends the response to the client, and the page is reloaded. So, the server is responsible for routing in server side routing.
+
 ## Introduction to React Routing:
 
 - # Step 1: Install React Router Dom:
@@ -212,3 +222,79 @@ setFilteredRestaurants(filteredResList); // Correct
       <Link to="/">Home</Link>
       <Link to="/about">About</Link>
   ```
+
+- # Step 5: Creating Restaurant Menu:
+  - We want to create a dynamic route to show the data of each restaurant.
+- We need to create a RestaurantMenu component.
+- Then created a dynamic path for the restaurant menu with resId.
+
+  ```javascript
+  {
+      path: "/restaurants/:resId",
+      element: <RestaurantMenu />,
+    },
+  ```
+
+- # Step 6: Get the Dynamic Data from the API:
+- When the RestaurantMenu component is rendered, we will make an API call using useState hook to get the data of the restaurant.
+
+- We are doing the same thing that we did in the previous episodes in the Body component and RestaurantCard component.
+
+  ```javascript
+  import { useState, useEffect } from "react";
+  import Shimmer from "./Shimmer.js";
+
+  const RestaurantMenu = () => {
+    const [resInfo, setResInfo] = useState(null);
+
+    useEffect(() => {
+      fetchMenu();
+    }, []);
+
+    const fetchMenu = async () => {
+      const data = await fetch(
+        "https://www.zomato.com/webroutes/getPage?page_url=/kolkata/aminia-new-market-area/order&location=&isMobile=1"
+        // "https://www.zomato.com/webroutes/getPage?page_url=/kolkata/burger-king-new-market-area/info&location=&isMobile=1"
+        // "https://link.zomato.com/xqzv/r6vj7tg3?deep_link_value=zomato%3A%2F%2Frestaurant%2F19867842%2Fmenu%3Futm_campaign%3D53a0c7393a376b8c08a06d21ad1bf2f3%26utm_source%3Dmweb%26utm_medium%3DMwebMenuModal"
+
+        //   "https://www.zomato.com/webroutes/getPage?page_url=/kolkata/info&location=&isMobile=1"
+        //   "https://www.zomato.com/webroutes/getPage?page_url=/kolkata/restaurants/info&location=&isMobile=1"
+        //   "https://www.zomato.com/webroutes/getPage?page_url=/kolkata/restaurants?place_name=College+Street&dishv2_id=30308&location=&isMobile=1"
+      );
+
+      const json = await data.json();
+      console.log(json);
+      setResInfo(json);
+    };
+
+    if (resInfo === null) return <Shimmer />;
+
+    const { name, cuisine_string } =
+      resInfo?.page_data?.sections?.SECTION_BASIC_INFO;
+
+    const { menus } = resInfo?.page_data?.order?.menuList;
+
+    const { menu } = resInfo?.page_data?.order?.menuList?.menus[0];
+
+    return (
+      <div className="menu">
+        <h1>{name}</h1>
+        <p>{cuisine_string}</p>
+        <h2>{menu?.name}</h2>
+        <ul>
+          {Array.isArray(menus) &&
+            menus.map((resMenu) => (
+              <li>
+                {resMenu?.menu.categories[0].category?.items[0]?.item?.name}
+              </li>
+            ))}
+        </ul>
+      </div>
+    );
+  };
+
+  export default RestaurantMenu;
+  ```
+
+  - Here is the above code explanation:
+    - We are using useState hook to store the data of the restaurant. Then we are using useEffect hook to make an API call to get the data of the restaurant. After that we are using conditional rendering to show the shimmer effect until the data is fetched. Then we are using destructuring to get the name and cuisine_string of the restaurant. Then we are using destructuring to get the menus of the restaurant. Then we are using destructuring to get the menu of the restaurant. Then we are using conditional rendering to show the menu of the restaurant. Then we are using Array.isArray to check if the menus is an array or not. Then we are using map function to iterate over the menus array and show the menu items of the restaurant. It is a nested array, so we are using multiple destructuring to get the menu items of the restaurant. Because of nesting it is a little bit complex to get out the data.
