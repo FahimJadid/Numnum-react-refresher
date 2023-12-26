@@ -1,4 +1,4 @@
-import { useRouteError } from "react-router-dom";
+import { useRouteError, Link } from "react-router-dom";
 
 const Error = () => {
   const err = useRouteError();
@@ -14,9 +14,9 @@ const Error = () => {
         <p>
           ...maybe the page you're looking for is not found or never existed.
         </p>
-        <a href="/" target="_blank" rel="noopener noreferrer">
+        <Link to="/">
           <button className="error-btn">Back to home</button>
-        </a>
+        </Link>
       </div>
     </div>
   );

@@ -36,6 +36,10 @@
 - 2. Put your state variables at the top of the component:
 - 3. Never create state variables inside of a loop or conditional statement:
 
+- # Q: why we don't use anchor tags in react?
+
+  - Ans: We don't use anchor tags in react because anchor tags are used to navigate to different pages, and react is a single page application, if we use anchor tags, the page will be reloaded, and the state of the application will be lost. So, we don't use anchor tags in react.
+
 ## Introduction to React Routing:
 
 - # Step 1: Install React Router Dom:
@@ -196,4 +200,15 @@ setFilteredRestaurants(filteredResList); // Correct
       </div>
     );
   };
+  ```
+
+- # Step 5: Linking pages:
+
+  - We need to import Link component from react-router-dom.
+  - We need to use Link component instead of anchor tags. It works like anchor tags but doesn't reload the page.
+  - We need to use `to` property to specify the path to which we want to navigate.
+
+  ```javascript
+      <Link to="/">Home</Link>
+      <Link to="/about">About</Link>
   ```
