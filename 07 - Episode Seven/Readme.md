@@ -136,3 +136,18 @@
     const { error } = useRouteError();
   };
   ```
+
+## Special Bug Fix:
+
+- While working found a bug for the top Rated Restaurants.
+  The issue lies in how we were handling the filtering mechanism. In the code, we have two states: listOfRestaurants and filteredRestaurants. When we click the "Top Rated Restaurants" button, we were updating listOfRestaurants and not filteredRestaurants. As a result, the subsequent searches were being performed on the modified listOfRestaurants, which may not contain the original data.
+
+To fix this issue, we should update the filteredRestaurants state when applying filters or searches. Instead of updating the listOfRestaurants state, we should update the filteredRestaurants state. Here's an updated version of the code:
+
+```javascript
+setListOfRestaurants(filteredResList); // Wrong
+
+setFilteredRestaurants(filteredResList); // Correct
+```
+
+- The above code was causing the bug.

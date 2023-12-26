@@ -57,7 +57,7 @@ const Body = () => {
             const filteredResList = listOfRestaurants.filter((res) => {
               return Number(res?.info?.rating?.aggregate_rating) >= 3.8;
             });
-            setListOfRestaurants(filteredResList);
+            setFilteredRestaurants(filteredResList);
           }}
           className="filter-btn"
         >
