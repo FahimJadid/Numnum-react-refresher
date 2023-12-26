@@ -55,7 +55,7 @@ const Body = () => {
         <button
           onClick={() => {
             const filteredResList = listOfRestaurants.filter((res) => {
-              return Number(res?.info?.rating?.aggregate_rating) >= 4.0;
+              return Number(res?.info?.rating?.aggregate_rating) >= 3.8;
             });
             setListOfRestaurants(filteredResList);
           }}

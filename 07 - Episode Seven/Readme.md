@@ -108,3 +108,31 @@
 
   root.render(<RouterProvider router={appRouter} />);
   ```
+
+- # Step 3: Adding an Error element to appRouter:
+
+  - We need to add an error element to the appRouter, so that if the user enters a path that is not defined in the appRouter, then we can show an error message to the user.
+
+  ```javascript
+  const appRouter = createBrowserRouter([
+    {
+      path: "/",
+      element: <App />,
+      errorElement: <Error />,
+    },
+    {
+      path: "/about",
+      element: <About />,
+    },
+  ]);
+  ```
+
+- React router dom gives us an access to a hook called UseRouteError. Using this hook can get detailed errors that occurred.
+
+  ```javascript
+  import { useRouteError } from "react-router-dom";
+
+  const Error = () => {
+    const { error } = useRouteError();
+  };
+  ```
