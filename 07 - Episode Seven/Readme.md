@@ -151,3 +151,49 @@ setFilteredRestaurants(filteredResList); // Correct
 ```
 
 - The above code was causing the bug.
+
+- # Step 4: Let's make our app consistent throughout all routes:
+
+- We need to add a Header component to the appRouter, so that the Header component is visible in all the routes.
+
+- In this method we need to add a children property to the appRouter, and inside the children property we need to add a path and element property.
+
+  ```javascript
+  const appRouter = createBrowserRouter([
+    {
+      path: "/",
+      element: <App />,
+      children: [
+        {
+          path: "/about",
+          element: <About />,
+        },
+        {
+          path: "/contact",
+          element: <Contact />,
+        },
+      ],
+      errorElement: <Error />,
+    },
+  ]);
+  ```
+
+- We are putting the about and contact routes as children of the root route which is App component.
+  So now /about and /contact are children of the root route which is App component.
+
+- Now we want to configure the App component to display according to conditions. If the path is /about, then display the About component, if the path is /contact, then display the Contact component, and if the path is /, then display the Body component.
+
+- Now we need to use Outlet component from react-router-dom. Outlet component is used to display the components according to the conditions. Whenever there is a change in the path, the Outlet will be filled with children according to the path.
+
+  ```javascript
+  import { Outlet } from "react-router-dom";
+
+  const App = () => {
+    return (
+      <div className="app">
+        <Header />
+        <Outlet />
+      </div>
+    );
+  };
+  ```
