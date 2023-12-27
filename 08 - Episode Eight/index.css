@@ -149,3 +149,16 @@
   font-size: 1.3rem;
   cursor: pointer;
 }
+
+/* User Card */
+
+.user-card {
+  width: 15rem;
+  overflow: hidden;
+  margin: 1rem;
+  padding: 1rem;
+  border-color: rgb(255, 255, 255);
+  border-radius: 1.5rem;
+  border: 0.1rem solid rgb(232, 232, 232);
+  position: relative;
+}
