@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
+import { Restaurant_API } from "../Utils/constants";
+import { Link } from "react-router-dom";
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
@@ -17,6 +19,7 @@ const Body = () => {
         "https://www.zomato.com/webroutes/getPage?page_url=/kolkata/restaurants?place_name=College+Street&dishv2_id=30308&location=&isMobile=1"
       );
       const json = await data.json();
+      console.log(json);
 
       setListOfRestaurants(json?.page_data?.sections?.SECTION_SEARCH_RESULT);
       setFilteredRestaurants(json?.page_data?.sections?.SECTION_SEARCH_RESULT);
@@ -68,8 +71,17 @@ const Body = () => {
       <div className="res-container">
         {filteredRestaurants?.map((restaurant) => {
           const resId = restaurant?.info?.resId;
-          if (resId) {
-            return <RestaurantCard key={resId} resData={restaurant} />;
+          const clickUrl = restaurant?.order?.actionInfo?.clickUrl;
+          console.log(clickUrl);
+
+          if (resId && clickUrl) {
+            let parts = clickUrl.split("/");
+            let restaurantName = parts[2] || "";
+            return (
+              <Link to={"/restaurants/" + restaurantName}>
+                <RestaurantCard key={resId} resData={restaurant} />;
+              </Link>
+            );
           }
           return null;
         })}

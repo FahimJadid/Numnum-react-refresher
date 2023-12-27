@@ -1,23 +1,35 @@
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer.js";
+import { useParams } from "react-router-dom";
 
 const RestaurantMenu = () => {
   const [resInfo, setResInfo] = useState(null);
+
+  const { restaurantName } = useParams();
 
   useEffect(() => {
     fetchMenu();
   }, []);
 
   const fetchMenu = async () => {
-    const data = await fetch(
-      "https://www.zomato.com/webroutes/getPage?page_url=/kolkata/aminia-new-market-area/order&location=&isMobile=1"
-      //   "https://www.zomato.com/webroutes/getPage?page_url=/kolkata/burger-king-new-market-area/info&location=&isMobile=1"
-      //   "https://link.zomato.com/xqzv/r6vj7tg3?deep_link_value=zomato%3A%2F%2Frestaurant%2F19867842%2Fmenu%3Futm_campaign%3D53a0c7393a376b8c08a06d21ad1bf2f3%26utm_source%3Dmweb%26utm_medium%3DMwebMenuModal"
-
-      //   "https://www.zomato.com/webroutes/getPage?page_url=/kolkata/info&location=&isMobile=1"
-      //   "https://www.zomato.com/webroutes/getPage?page_url=/kolkata/restaurants/info&location=&isMobile=1"
-      //   "https://www.zomato.com/webroutes/getPage?page_url=/kolkata/restaurants?place_name=College+Street&dishv2_id=30308&location=&isMobile=1"
+    const encodedName = encodeURIComponent(
+      restaurantName.replace(/\s+/g, "-").toLowerCase()
     );
+    const data = await fetch(
+      `https://www.zomato.com/webroutes/getPage?page_url=/kolkata/${encodedName}/order&location=`
+      //   `https://www.zomato.com/webroutes/getPage?page_url=/kolkata/aminia-new-market-area/order&location=`
+    );
+
+    //   `https://www.zomato.com/webroutes/getPage?page_url=/kolkata/${encodedName}/order&location=`
+    //   "https://www.zomato.com/webroutes/getPage?page_url=/kolkata/restaurants?place_name=College+Street&dishv2_id=30308&location=&isMobile=1"
+
+    //   "https://www.zomato.com/webroutes/getPage?page_url=/kolkata/rayyan-biryani-taltala/order?contextual_menu_params=eyJkaXNoX3NlYXJjaCI6eyJ0aXRsZSI6IkJlc3QgaW4gQmlyeWFuaSIsImRpc2hfaWRzIjpbIjMwMzA4Il0sImN1aXNpbmVfaWRzIjpbXX19"
+    //   "https://www.zomato.com/webroutes/getPage?page_url=kolkata/la-pinoz-pizza-kankurgachi/order?universal_dish_ids=20012"
+
+    //   "https://link.zomato.com/xqzv/r6vj7tg3?deep_link_value=zomato%3A%2F%2Frestaurant%2F19867842%2Fmenu%3Futm_campaign%3D53a0c7393a376b8c08a06d21ad1bf2f3%26utm_source%3Dmweb%26utm_medium%3DMwebMenuModal"
+
+    //   "https://www.zomato.com/webroutes/getPage?page_url=/kolkata/info&location=&isMobile=1"
+    //   "https://www.zomato.com/webroutes/getPage?page_url=/kolkata/restaurants/info&location=&isMobile=1"
 
     const json = await data.json();
     console.log(json);
@@ -41,8 +53,10 @@ const RestaurantMenu = () => {
       <ul>
         {Array.isArray(menus) &&
           menus.map((resMenu) => (
-            <li>
-              {resMenu?.menu.categories[0].category?.items[0]?.item?.name}
+            <li
+              key={resMenu?.menu?.categories[0]?.category?.items[0]?.item?.id}
+            >
+              {resMenu?.menu?.categories[0]?.category?.items[0]?.item?.name}
             </li>
           ))}
       </ul>

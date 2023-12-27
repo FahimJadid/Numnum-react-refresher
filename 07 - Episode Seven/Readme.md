@@ -297,4 +297,32 @@ setFilteredRestaurants(filteredResList); // Correct
   ```
 
   - Here is the above code explanation:
+
     - We are using useState hook to store the data of the restaurant. Then we are using useEffect hook to make an API call to get the data of the restaurant. After that we are using conditional rendering to show the shimmer effect until the data is fetched. Then we are using destructuring to get the name and cuisine_string of the restaurant. Then we are using destructuring to get the menus of the restaurant. Then we are using destructuring to get the menu of the restaurant. Then we are using conditional rendering to show the menu of the restaurant. Then we are using Array.isArray to check if the menus is an array or not. Then we are using map function to iterate over the menus array and show the menu items of the restaurant. It is a nested array, so we are using multiple destructuring to get the menu items of the restaurant. Because of nesting it is a little bit complex to get out the data.
+
+  - Here is one thing we have noticed that the API is not using dynamic ID, instead they are using restaurant name for the API call. So, we also use dynamically restaurant name for routes.
+  - We are using useParams hook to get the dynamic ID from the URL.
+
+  ```javascript
+  <div className="res-container">
+    {filteredRestaurants?.map((restaurant) => {
+      const resId = restaurant?.info?.resId;
+      const clickUrl = restaurant?.order?.actionInfo?.clickUrl;
+      console.log(clickUrl);
+
+      if (resId && clickUrl) {
+        let parts = clickUrl.split("/");
+        let restaurantName = parts[2] || "";
+        return (
+          <Link to={"/restaurants/" + restaurantName}>
+            <RestaurantCard key={resId} resData={restaurant} />;
+          </Link>
+        );
+      }
+      return null;
+    })}
+  </div>
+  ```
+
+  - Here is the above code explanation:
+    - So when user clicks on the restaurant card, the user will be redirected to the RestaurantMenu component. Here we are not using resId but instead we are using restaurant as a dynamic parameter. And we are getting the restaurant name from the clickUrl which is a URL but we don't need the whole URL, we just need the name of the restaurant. And we are using split function to get the restaurant name from the clickUrl. And we are using Link component to link to the RestaurantMenu component. And we are using restaurant name as a dynamic parameter in the URL. We also added a condition to check if the restaurant name is available or not. If the restaurant name is available then we will show the RestaurantCard component, otherwise we will not show the RestaurantCard component. And we are splitting on the basis of "/" and we are getting the second part of the URL which is the restaurant name. And we are using the restaurant name as a dynamic parameter in the URL.
