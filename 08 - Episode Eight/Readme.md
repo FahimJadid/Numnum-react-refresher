@@ -4,10 +4,6 @@
 
 # Q&A:
 
-- # Q: What is class based components?
-
-  - Ans:
-
 - # Q: why we use super(props) in class based component in react?
 
 - Ans:
@@ -35,7 +31,7 @@ class MyComponent extends React.Component {
 
 In this example, `super(props)` is called to ensure that `this.props` is available in the constructor, and that the parent class (`React.Component`) is properly initialized.
 
-- # Q: What is
+- # Q: How does class based component work in react?
 
   - Ans:
 
@@ -140,4 +136,84 @@ this.state = {
 };
 ```
 
-- Now we will ses how to update these state variables.
+- Now we will ses how to update these state variables. We will create a button and when we click on the button the count state variable will be updated. And we will see how to update the state variables. And we will see how to use the setState method. Let's see how it works.
+
+- "Modifying a state variable directly is not a good practice. We should use the setState method to update the state variables. Let's see how it works."
+
+  ` this.state.count = this.state.count + 1;` // Not a good practice; bad practice
+
+```js
+        <h1>Count: {count}</h1>
+        <button
+          onClick={() => {
+            this.setState({ count: this.state.count + 1 });
+          }}
+        >
+          Click
+        </button>
+```
+
+- So we are using setState method to update the state variables. And we are passing an object inside the setState method and updating the count state variable.
+
+- Let's discuss how our class based component is working behind the scenes. In our app About is our parent component. so whenever About Component is rendered or mounted in to the web page it basically starts rendering the JSX and while rendering whenever it finds the UserClass component it starts to load UserClass component. And goes to the UserClass and it creates an instance of the UserClass component and when the class is instantiated the constructor is called an once the constructor is called then the render is called. first constructor and then render.
+
+- Now it get's slightly complex when we also make the parent component a class based component. So, let's make the About.js a class based component. And let's see how the lifecycle works.
+
+```js
+// import User from "./User";
+import React from "react";
+import UserClass from "./UserClass";
+
+class About extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <div>
+        <h1>About</h1>
+        <h2>This is a about section</h2>
+        <UserClass name={"Fahim"} location={"Dhaka"} contact={"@myname"} />
+      </div>
+    );
+  }
+}
+
+export default About;
+```
+
+- Now let's see how constructor and render function is called between these two class based components.
+- Lifecycle flow of class based components:
+
+  - 1. About constructor : Parent constructor
+  - 2. About render : Parent render
+  - 3. UserClass constructor : Child constructor
+  - 4. UserClass render : Child render
+
+- It looks easy but let's make it a little bit complex. Let's add another method called componentDidMount in the UserClass component. And Now the flow follows:
+
+  - 1. When the component is loaded the constructor is called first.
+  - 2. Then the render method is called.
+  - 3. Once this component is mounted into the DOM
+  - 4. Then the componentDidMount method is called. This will be called when the component is already mounted in the DOM and we can do some side effects here. Like we can fetch data from an API.
+  - 1. Child constructor
+  - 2. Child render
+  - 3. Child componentDidMount
+
+- But if the componentDidMount also exists in the parent components then what will happen and what will be the lifecycle flow.
+
+  - 1. parent constructor
+  - 2. parent render
+  - 3. child constructor
+  - 4. child render
+  - 5. Child component Did mount
+  - 6. parent component Did mount
+
+  - You might have a question that why the parent component Did mount is called after the child component Did mount. Because the parent component is already mounted in the DOM. The reason is that the parent component is also a child component of the App component. So, the parent component is also mounted in the DOM. And that's why the parent component Did mount is called after the child component Did mount.
+
+- Let's understand this parent & child relational concept in depth because it's really important for interview purpose. So, we have two class based components, one is the parent: About component and other is the child: UserClass component.
+  So when the `parent: About is loaded`, at first the `constructor will be called` then `parent: About render will be called` and when the component is rendering it will render the About component and when it finds the `child: UserClass` component it will start loading the UserClass component. But The mounting of the About component is not finished yet. So, the `parent: About componentDidMount` will not be called yet. That's why it is go to the child: UserClass component and it will trigger child's lifecycle method
+  
+   And now the `child: UserClass` component is loaded it will call the `constructor` and then it will call the `render` method. And when the `child: UserClass` component is mounted in the DOM then the `child: UserClass componentDidMount` will be called. And when the `child: UserClass` component is mounted in the DOM and once the children mounting is completed then the `parent: About componentDidMount` will be called. And that's why the `parent: About componentDidMount` is called after the `child: UserClass componentDidMount`.
+
+   
