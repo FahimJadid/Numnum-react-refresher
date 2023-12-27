@@ -31,9 +31,15 @@ class MyComponent extends React.Component {
 
 In this example, `super(props)` is called to ensure that `this.props` is available in the constructor, and that the parent class (`React.Component`) is properly initialized.
 
-- # Q: How does class based component work in react?
+- # Q: What is the use of componentDidMount?
+
+  - Ans: The `componentDidMount()` method is used to fetch data from a server or an API. In the functional components, we use the `useEffect()` hook to fetch data from an API. But in the class-based components, we use the `componentDidMount()` method to fetch data from an API.
+
+- # Q: Why fetch data in the componentDidMount?
 
   - Ans:
+    `Loads => Render => componentDidMount(API call) => Re-render`
+    we are familiar with this flow in react. So, when the component is rendered for the first time with basic data the componentDidMount method is called. And we can fetch data from an API in the componentDidMount method. And when the data is fetched from the API then the component will re-render with new fetched data. And the data will be displayed in the component. We do this for fast rendering. Because if we fetch data from an API in the render method then the component will re-render multiple times. And it will slow down the rendering process. And that's why we fetch data from an API in the componentDidMount method.
 
 ## 1. Introduction to Class based Components:
 
@@ -213,7 +219,27 @@ export default About;
 
 - Let's understand this parent & child relational concept in depth because it's really important for interview purpose. So, we have two class based components, one is the parent: About component and other is the child: UserClass component.
   So when the `parent: About is loaded`, at first the `constructor will be called` then `parent: About render will be called` and when the component is rendering it will render the About component and when it finds the `child: UserClass` component it will start loading the UserClass component. But The mounting of the About component is not finished yet. So, the `parent: About componentDidMount` will not be called yet. That's why it is go to the child: UserClass component and it will trigger child's lifecycle method
-  
-   And now the `child: UserClass` component is loaded it will call the `constructor` and then it will call the `render` method. And when the `child: UserClass` component is mounted in the DOM then the `child: UserClass componentDidMount` will be called. And when the `child: UserClass` component is mounted in the DOM and once the children mounting is completed then the `parent: About componentDidMount` will be called. And that's why the `parent: About componentDidMount` is called after the `child: UserClass componentDidMount`.
 
-   
+  And now the `child: UserClass` component is loaded it will call the `constructor` and then it will call the `render` method. And when the `child: UserClass` component is mounted in the DOM then the `child: UserClass componentDidMount` will be called. And when the `child: UserClass` component is mounted in the DOM and once the children mounting is completed then the `parent: About componentDidMount` will be called. And that's why the `parent: About componentDidMount` is called after the `child: UserClass componentDidMount`.
+
+- Right Now we have only one children component. But what if we have multiple children components. Let's see how it effects the lifecycle. Now we have two instances of the same UserClass.
+
+```js
+<UserClass name={"Fahim"} location={"Dhaka"} contact={"@myname"} />
+        <UserClass name={"Jadid"} location={"DhK"} contact={"@myname"} />
+```
+
+- Now the flow should be;
+
+  - 1. parent constructor
+  - 2. parent render
+    - 3. child 1 constructor
+    - 4. child 1 render
+    - 5. child 2 constructor
+    - 6. child 2 render
+    - 7. Child 1 component Did mount
+    - 8. Child 2 component Did mount
+  - 9. parent component Did mount
+
+- Let's discuss what just happened!
+  ![Alt text](image-4.png)

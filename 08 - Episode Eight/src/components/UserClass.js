@@ -11,6 +11,7 @@ class UserClass extends React.Component {
 
   componentDidMount() {
     console.log("Child component Did mount");
+    // Api call
   }
   render() {
     const { name, location, contact } = this.props;

@@ -21,6 +21,7 @@ class About extends React.Component {
         <h1>About</h1>
         <h2>This is a about section</h2>
         <UserClass name={"Fahim"} location={"Dhaka"} contact={"@myname"} />
+        <UserClass name={"Jadid"} location={"DhK"} contact={"@myname"} />
       </div>
     );
   }
