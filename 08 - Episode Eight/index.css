@@ -1,0 +1,151 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid red;
+}
+
+.logo {
+  width: 100px;
+  padding: 0px 20px;
+}
+
+.nav-items > ul {
+  display: flex;
+  font-size: 20px;
+  list-style-type: none;
+  padding: 0px 20px;
+}
+
+.nav-items > ul > li {
+  padding: 10px;
+  margin: 10px;
+}
+
+.res-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 3.6 rem 0px;
+  justify-content: flex-start;
+}
+
+.res-card {
+  width: 15rem;
+  overflow: hidden;
+  margin: 1rem;
+  padding: 1rem;
+  border-color: rgb(255, 255, 255);
+  border-radius: 1.5rem;
+  border: 0.1rem solid rgb(232, 232, 232);
+  position: relative;
+}
+
+.filter {
+  padding: 20px;
+  display: flex;
+}
+
+.filter-btn {
+  cursor: pointer;
+  margin-left: 20px;
+}
+.res-img {
+  cursor: pointer;
+  width: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+/* Shimmer.css */
+.shimmer-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.shimmer {
+  width: 15rem;
+  height: 27rem;
+  overflow: hidden;
+  margin: 1rem;
+  padding: 1rem;
+  border-color: rgb(255, 255, 255);
+  border-radius: 1.5rem;
+  border: 0.1rem solid rgb(232, 232, 232);
+  position: relative;
+  background: linear-gradient(-90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  animation: shimmerAnimation 1.5s infinite;
+}
+
+@keyframes shimmerAnimation {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* button */
+
+.btn {
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #e74c3c;
+  border-radius: 0.6em;
+  color: #e74c3c;
+  cursor: pointer;
+  align-self: center;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1;
+  padding: 1em;
+  text-decoration: none;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+
+  &:hover,
+  &:focus {
+    color: black;
+    outline: 0;
+  }
+}
+
+/* Error */
+
+.error-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.gif {
+  display: flex;
+  justify-content: center;
+}
+
+.error-content {
+  text-align: center;
+  margin: 3rem 0;
+}
+
+.error-content .error-heading {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+.error-content > p {
+  font-size: 1.3rem;
+  padding: 0.7rem 0;
+}
+
+.error-btn {
+  padding: 1rem;
+  border-radius: 15px;
+  outline: none;
+  border: none;
+  background: #0046d4;
+  color: #fff;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
