@@ -72,7 +72,6 @@ const Body = () => {
         {filteredRestaurants?.map((restaurant) => {
           const resId = restaurant?.info?.resId;
           const clickUrl = restaurant?.order?.actionInfo?.clickUrl;
-          console.log(clickUrl);
 
           if (resId && clickUrl) {
             let parts = clickUrl.split("/");

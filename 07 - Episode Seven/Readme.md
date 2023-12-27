@@ -326,3 +326,75 @@ setFilteredRestaurants(filteredResList); // Correct
 
   - Here is the above code explanation:
     - So when user clicks on the restaurant card, the user will be redirected to the RestaurantMenu component. Here we are not using resId but instead we are using restaurant as a dynamic parameter. And we are getting the restaurant name from the clickUrl which is a URL but we don't need the whole URL, we just need the name of the restaurant. And we are using split function to get the restaurant name from the clickUrl. And we are using Link component to link to the RestaurantMenu component. And we are using restaurant name as a dynamic parameter in the URL. We also added a condition to check if the restaurant name is available or not. If the restaurant name is available then we will show the RestaurantCard component, otherwise we will not show the RestaurantCard component. And we are splitting on the basis of "/" and we are getting the second part of the URL which is the restaurant name. And we are using the restaurant name as a dynamic parameter in the URL.
+
+  ```javascript
+  import { useState, useEffect } from "react";
+  import Shimmer from "./Shimmer.js";
+  import { useParams } from "react-router-dom";
+
+  const RestaurantMenu = () => {
+    const [resInfo, setResInfo] = useState(null);
+
+    const { restaurantName } = useParams();
+
+    useEffect(() => {
+      fetchMenu();
+    }, []);
+
+    const fetchMenu = async () => {
+      const encodedName = encodeURIComponent(
+        restaurantName.replace(/\s+/g, "-").toLowerCase()
+      );
+      const data = await fetch(
+        `https://www.zomato.com/webroutes/getPage?page_url=/kolkata/${encodedName}/order&location=`
+        //   `https://www.zomato.com/webroutes/getPage?page_url=/kolkata/aminia-new-market-area/order&location=`
+      );
+
+      const json = await data.json();
+      setResInfo(json);
+    };
+
+    if (resInfo === null) return <Shimmer />;
+
+    const { name, cuisine_string } =
+      resInfo?.page_data?.sections?.SECTION_BASIC_INFO;
+
+    const { menus } = resInfo?.page_data?.order?.menuList;
+
+    const { menu } = resInfo?.page_data?.order?.menuList?.menus[0];
+
+    return (
+      <div className="menu">
+        <h1>{name}</h1>
+        <p>{cuisine_string}</p>
+        <h2>{menu?.name}</h2>
+        <ul>
+          {Array.isArray(menus) &&
+            menus.map((resMenu) => (
+              <li
+                key={resMenu?.menu?.categories[0]?.category?.items[0]?.item?.id}
+              >
+                {resMenu?.menu?.categories[0]?.category?.items[0]?.item?.name}
+              </li>
+            ))}
+        </ul>
+      </div>
+    );
+  };
+
+  export default RestaurantMenu;
+  ```
+
+  - Here is the above code explanation:
+
+    - We are using useParams hook to get the dynamic restaurant name from the URL. Then we are using useEffect hook to make an API call to get the data of the restaurant. Reason behind using the encodeURIComponent encoding is that the restaurant name is not in the URL format, so we need to convert the restaurant name into URL format. And we are using replace function to replace the spaces with "-" and we are using toLowerCase function to convert the restaurant name into lowercase. Then we are using conditional rendering to show the shimmer effect until the data is fetched. Then we are using destructuring to get the name and cuisine_string of the restaurant. Then we are using destructuring to get the menus of the restaurant. Then we are using destructuring to get the menu of the restaurant. Then we are using conditional rendering to show the menu of the restaurant. Then we are using Array.isArray to check if the menus is an array or not. Then we are using map function to iterate over the menus array and show the menu items of the restaurant. It is a nested array, so we are using multiple destructuring to get out the data. And we are using key property to give a unique key to each menu item.
+
+    `const fetchMenu = async () => {
+const encodedName = encodeURIComponent(
+  restaurantName.replace(/\s+/g, "-").toLowerCase()
+);
+const data = await fetch(
+  `https://www.zomato.com/webroutes/getPage?page_url=/kolkata/${encodedName}/order&location=`
+    // `https://www.zomato.com/webroutes/getPage?page_url=/kolkata/aminia-new-market-area/order&location=`
+    );
+    `
