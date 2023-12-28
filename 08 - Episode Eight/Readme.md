@@ -246,11 +246,11 @@ export default About;
 
   React lifecycle Diagram
 
-# step 1: In react the component is mounted in two phases.
+# In react the component is mounted in two phases.
 
-- Phase: 1: Render Phase: When the component is mounting; first of all the constructor is called. Then the render is called. This combination of constructor and render is the render phase. Then react updates the DOM.
+- `Phase: 1:` Render Phase: When the component is mounting; first of all the constructor is called. Then the render is called. This combination of constructor and render is the render phase. Then react updates the DOM.
 
-- Phase: 2: Commit Phase: When the DOM is updated then the componentDidMount is called. And this is the second phase of mounting.
+- `Phase: 2:` Commit Phase: When the DOM is updated then the componentDidMount is called. And this is the second phase of mounting.
 
 - let's visualize with our application's About and UserClass component for better understanding.
   About component will be mounted:
@@ -269,3 +269,64 @@ export default About;
   - 9. parent component Did mount(About)
 
 - `So, why we use batching because it's faster. Because the DOM manipulation or updationg is expensive. So, react tries to batch up all children in the render and also the componentDidMount. And that's why it's faster. So react is first of all batching the render phase for both children and then batching the commit phase for both the children.`
+
+# Time for how to make an API call:
+
+- we are using github API to fetch data. And we are going to use the componentDidMount method to fetch data from the API. we are going to use the async await method to fetch data from the API. And we are going to use the setState method to update the state variab
+
+```js
+
+  async componentDidMount() {
+    // Api call
+
+    const data = await fetch("https://api.github.com/users/FahimJadid");
+
+    const json = data.json();
+    console.log(json);
+  }
+```
+
+```js
+import React from "react";
+
+class UserClass extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userInfo: {
+        name: "default name",
+        location: "default location",
+      },
+    };
+  }
+
+  async componentDidMount() {
+    // Api call
+
+    const data = await fetch("https://api.github.com/users/FahimJadid");
+
+    const json = await data.json();
+
+    this.setState({
+      userInfo: json,
+    });
+
+    console.log(json);
+  }
+
+  render() {
+    const { name, location, avatar_url } = this.state.userInfo;
+    return (
+      <div className="user-card">
+        <img src={avatar_url} />
+        <h2>Name: {name}</h2>
+        <h3>Location: {location}</h3>
+      </div>
+    );
+  }
+}
+
+export default UserClass;
+```
+
+-

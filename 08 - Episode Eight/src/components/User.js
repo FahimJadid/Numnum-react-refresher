@@ -3,6 +3,21 @@ import { useState } from "react";
 const User = () => {
   const { count, setCount } = useState(0);
   const { age, setAge } = useState(1);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const data = await fetch("https://api.github.com/users/USERNAME");
+      const json = await data.json();
+      console.log(json);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   return (
     <div className="user-card">
       <h1>Count: {count}</h1>
