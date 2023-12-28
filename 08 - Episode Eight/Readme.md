@@ -243,3 +243,11 @@ export default About;
 
 - Let's discuss what just happened!
   ![Alt text](image-4.png)
+
+  React lifecycle Diagram
+
+# step 1: In react the component is mounted in two phases.
+
+- Phase: 1: Render Phase: When the component is mounting; first of all the constructor is called. Then the render is called. This combination of constructor and render is the render phase. Then react updates the DOM.
+
+- Phase: 2: Commit Phase: When the DOM is updated then the componentDidMount is called. And this is the second phase of mounting.
