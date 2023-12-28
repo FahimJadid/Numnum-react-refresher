@@ -251,3 +251,21 @@ export default About;
 - Phase: 1: Render Phase: When the component is mounting; first of all the constructor is called. Then the render is called. This combination of constructor and render is the render phase. Then react updates the DOM.
 
 - Phase: 2: Commit Phase: When the DOM is updated then the componentDidMount is called. And this is the second phase of mounting.
+
+- let's visualize with our application's About and UserClass component for better understanding.
+  About component will be mounted:
+
+  - 1. parent constructor(About)
+  - 2. parent render(About)
+       Starts the lifecycle of first child of UserClass component:
+    - 3. first child constructor(UserClass)
+    - 4. first child render(UserClass)
+         Now because there are two children of UserClass component, so that componentDidMount of the first child will not be called yet. Instead it will batch the render phase for the children of UserClass component. So, it will go to the second child of UserClass component for rendering.
+    - 5. second child constructor(UserClass)
+    - 6. second child render(UserClass)
+         Now the render phase is completed for the children of UserClass component. So, it will batch the commit phase together. And it will call the componentDidMount of the first child & second child of UserClass component.
+    - 7. first Child component Did mount(UserClass)
+    - 8. second Child component Did mount(UserClass)
+  - 9. parent component Did mount(About)
+
+- `So, why we use batching because it's faster. Because the DOM manipulation or updationg is expensive. So, react tries to batch up all children in the render and also the componentDidMount. And that's why it's faster. So react is first of all batching the render phase for both children and then batching the commit phase for both the children.`
