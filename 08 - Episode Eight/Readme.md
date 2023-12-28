@@ -444,3 +444,20 @@ componentWillUnmount() {
 }
 
 ```
+
+- Now let's see the same thing in funtional component with UseEffect hook. And we will see how to clean up the component in functional component. And we will see how to use UseEffect hook to clean up the component. Let's see how it works.
+
+```js
+useEffect(() => {
+  const timer = setInterval(() => {
+    console.log("setInterval called");
+  }, 1000);
+
+  return () => {
+    clearInterval(timer);
+    console.log("clean up");
+  };
+}, []);
+```
+
+- So, we are using setInterval method to call a function every 1 second. And we will use return function to clean up the setInterval method. And we will use clearInterval method to clean up the setInterval method.
