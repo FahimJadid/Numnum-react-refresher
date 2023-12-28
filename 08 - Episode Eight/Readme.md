@@ -366,3 +366,81 @@ export default UserClass;
     - <HTML new updated API data>
   - 5. componentDidUpdate called
   - 6. componentWillUnmount called only when we move to another page and the component is unmounted.
+
+```js
+import React from "react";
+
+class UserClass extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userInfo: {
+        name: "default name",
+        location: "default location",
+      },
+    };
+  }
+
+  async componentDidMount() {
+    // Api call
+
+    const data = await fetch("https://api.github.com/users/FahimJadid");
+
+    const json = await data.json();
+
+    this.setState({
+      userInfo: json,
+    });
+
+    console.log(json);
+  }
+
+  componentDidUpdate() {
+    console.log("componentDidUpdate called");
+  }
+
+  componentWillUnmount() {
+    console.log("componentWillUnmount called");
+  }
+
+  render() {
+    const { name, location, avatar_url } = this.state.userInfo;
+    return (
+      <div className="user-card">
+        <img src={avatar_url} />
+        <h2>Name: {name}</h2>
+        <h3>Location: {location}</h3>
+      </div>
+    );
+  }
+}
+
+export default UserClass;
+```
+
+# Let's talk about clean up:
+
+- When we are using class based components we have to clean up the component. Because if we don't clean up the component then it will cause memory leak. Suppose if we leave the component without cleaning up then the setInterval method will keep running in the background. And it will cause memory leak. Far worse is if we get back to the component again then the setInterval method will run again. And it will cause multiple setInterval method running in the background. And it will cause memory leak. Beacuse our app is not reloading it just changing or switching the components. And that's why we have to clean up the component. And we have to use componentWillUnmount method to clean up the component. Let's see how it works.
+
+```js
+
+componentDidMount() {
+  this.timer = setInterval(() => {
+    console.log("setInterval called");
+  }, 1000);
+  }
+
+componentWillUnmount() {
+  console.log("componentWillUnmount called");
+}
+```
+
+- So, we are using setInterval method to call a function every 1 second. And we will use componentWillUnmount method to clean up the setInterval method. And we will use clearInterval method to clean up the setInterval method. Let's see how it works.
+
+```js
+componentWillUnmount() {
+  clearInterval(this.timer);
+  console.log("componentWillUnmount called");
+}
+
+```
