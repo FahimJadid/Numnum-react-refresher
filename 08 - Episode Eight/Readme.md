@@ -329,4 +329,29 @@ class UserClass extends React.Component {
 export default UserClass;
 ```
 
--
+- So the flow for UserClass goes like this:
+  `Mounting phase:`
+  - 1. constructor
+  - 2. renders happend
+  - 3. react updated the DOM with dummy data
+  - 4. componentDidMount called the API
+  - 5. API call finished & setState called
+  - 6. setState updates the state variable with new data
+  - 7. setState finished & react updated the DOM with new data (Mounting phase is finished)
+
+`Updating phase:`
+
+- 8. (render happens)When the state variable is updated then react triggers render again
+- 9. react update the DOM with new data(visible to the user)
+- 10. Now componentDidUpdate called
+
+- `Summary:`
+  `Mounting phase:`
+  - 1. constructor(dummy)
+  - 2. render(dummy)
+    - <HTML dummy>
+  - 3. componentDidMount called - <API call> - <this.setState> => State variable updated
+  `Updating phase:`
+  - 4. render(API data)
+    - <HTML new updated API data>
+  - 5. componentDidUpdate called
