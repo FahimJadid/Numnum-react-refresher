@@ -41,6 +41,16 @@ In this example, `super(props)` is called to ensure that `this.props` is availab
     `Loads => Render => componentDidMount(API call) => Re-render`
     we are familiar with this flow in react. So, when the component is rendered for the first time with basic data the componentDidMount method is called. And we can fetch data from an API in the componentDidMount method. And when the data is fetched from the API then the component will re-render with new fetched data. And the data will be displayed in the component. We do this for fast rendering. Because if we fetch data from an API in the render method then the component will re-render multiple times. And it will slow down the rendering process. And that's why we fetch data from an API in the componentDidMount method.
 
+- # Q: What are differences between componentDidMount vs componentWillUnMount vs componentDidUpdate?
+
+  - Ans:
+
+    - `componentDidMount` is called after the component is mounted and has a DOM representation. This is often a place where you would attach generic DOM events. It is also the only place where you can call `setState` synchronously without causing an extra render. This is because it is called after the initial render, but before the browser updates the screen. Any calls to `setState` in this method will be batched together with the initial render, and therefore will only cause a single re-render.
+
+    - `componentWillUnmount` is called before the component is unmounted and destroyed. This is often a place where you would clean up any DOM events that were attached in `componentDidMount`.
+
+    - `componentDidUpdate` is called after the component is updated and has a DOM representation. This is often a place where you would attach generic DOM events. It is also the only place where you can call `setState` synchronously without causing an extra render. This is because it is called after the initial render, but before the browser updates the screen. Any calls to `setState` in this method will be batched together with the initial render, and therefore will only cause a single re-render.
+
 ## 1. Introduction to Class based Components:
 
 - Let's experiment with class based components. Because from the first episode we have been using functional components. But in the industry often we have to work on legacy code and most of them were built with class based components. But when the react team introduced hooks, they said that hooks are the future of react. So, we will be using hooks in this course. But we will also learn class based components. Because we have to work with them in the industry. And for interview purpose we have to know about class based components. So, let's get started.
@@ -351,7 +361,8 @@ export default UserClass;
   - 2. render(dummy)
     - <HTML dummy>
   - 3. componentDidMount called - <API call> - <this.setState> => State variable updated
-  `Updating phase:`
+       `Updating phase:`
   - 4. render(API data)
     - <HTML new updated API data>
   - 5. componentDidUpdate called
+  - 6. componentWillUnmount called only when we move to another page and the component is unmounted.
