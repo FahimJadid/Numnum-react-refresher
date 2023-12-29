@@ -1,32 +1,11 @@
-// import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer.js";
 import { useParams } from "react-router-dom";
 import useRestaurantMenu from "../Utils/useRestaurantMenu";
 
 const RestaurantMenu = () => {
-  // const [resInfo, setResInfo] = useState(null);
-
   const { restaurantName } = useParams();
 
   const resInfo = useRestaurantMenu(restaurantName);
-
-  //
-  // useEffect(() => {
-  //   fetchMenu();
-  // }, []);
-
-  // const fetchMenu = async () => {
-  //   const encodedName = encodeURIComponent(
-  //     restaurantName.replace(/\s+/g, "-").toLowerCase()
-  //   );
-  //   const data = await fetch(
-  //     `https://www.zomato.com/webroutes/getPage?page_url=/kolkata/${encodedName}/order&location=`
-  //   );
-
-  //   const json = await data.json();
-  //   setResInfo(json);
-  // };
-  //
 
   if (resInfo === null) return <Shimmer />;
 
