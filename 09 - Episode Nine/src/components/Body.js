@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
-import { Restaurant_API } from "../Utils/constants";
 import { Link } from "react-router-dom";
 
 const Body = () => {
