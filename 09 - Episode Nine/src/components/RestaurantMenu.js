@@ -1,28 +1,32 @@
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer.js";
 import { useParams } from "react-router-dom";
+import useRestaurantMenu from "../Utils/useRestaurantMenu";
 
 const RestaurantMenu = () => {
-  const [resInfo, setResInfo] = useState(null);
+  // const [resInfo, setResInfo] = useState(null);
 
   const { restaurantName } = useParams();
 
-  useEffect(() => {
-    fetchMenu();
-  }, []);
+  const resInfo = useRestaurantMenu(restaurantName);
 
-  const fetchMenu = async () => {
-    const encodedName = encodeURIComponent(
-      restaurantName.replace(/\s+/g, "-").toLowerCase()
-    );
-    const data = await fetch(
-      `https://www.zomato.com/webroutes/getPage?page_url=/kolkata/${encodedName}/order&location=`
-      //   `https://www.zomato.com/webroutes/getPage?page_url=/kolkata/aminia-new-market-area/order&location=`
-    );
+  //
+  // useEffect(() => {
+  //   fetchMenu();
+  // }, []);
 
-    const json = await data.json();
-    setResInfo(json);
-  };
+  // const fetchMenu = async () => {
+  //   const encodedName = encodeURIComponent(
+  //     restaurantName.replace(/\s+/g, "-").toLowerCase()
+  //   );
+  //   const data = await fetch(
+  //     `https://www.zomato.com/webroutes/getPage?page_url=/kolkata/${encodedName}/order&location=`
+  //   );
+
+  //   const json = await data.json();
+  //   setResInfo(json);
+  // };
+  //
 
   if (resInfo === null) return <Shimmer />;
 
