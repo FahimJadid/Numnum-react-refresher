@@ -7,17 +7,8 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
-import useOnlineStatus from "./Utils/useOnlineStatus";
 
 const App = () => {
-  const onlineStatus = useOnlineStatus();
-  if (onlineStatus === false)
-    return (
-      <h1>
-        Looks like you're offline! Please check your internet connection...
-      </h1>
-    );
-
   return (
     <div className="app">
       <Header />

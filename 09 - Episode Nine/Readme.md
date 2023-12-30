@@ -212,7 +212,7 @@ export default useOnlineStatus;
 
 - We are using `window.addEventListener` to listen to the `online` and `offline` events. And we are setting the `onlineStatus` to `false` when the user is offline. And we are setting the `onlineStatus` to `true` when the user is online. And we are returning the `onlineStatus` boolean value from our custom hook.
 
-- Now let's use this custom hook in our App component. So we will import this custom hook in our App component and call it inside the component. And we will store the return value of this custom hook in a variable called `onlineStatus`.
+- Now let's use this custom hook in our Body component. So we will import this custom hook in our Body component and call it inside the component. And we will store the return value of this custom hook in a variable called `onlineStatus`.
 
 ```js
 const onlineStatus = useOnlineStatus();
@@ -223,3 +223,11 @@ if (onlineStatus === false)
 ```
 
 - So if the `onlineStatus` is false then we will show a message to the user that he is offline. And if the `onlineStatus` is true then we will show the normal UI to the user.
+
+- Now let's see how to reuse this feature and make it a like a social media online status feature. SO go to the Header component and add another list item inside the unordered list. And inside the list item we will show a message to the user that he is online. And we will use the `onlineStatus` variable to show the message to the user.
+
+```js
+import useOnlineStatus from "./../Utils/useOnlineStatus";
+
+<li>Online:{onlineStatus ? "✅" : "🔴"}</li>;
+```
