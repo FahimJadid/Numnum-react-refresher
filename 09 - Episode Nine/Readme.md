@@ -263,6 +263,14 @@ const Grocery = lazy(() => {
 - Now let's see how to use this `Grocery` variable inside our JSX. So we will use `React.Suspense` component to show a fallback UI to the user while the chunks are loading. And we will use `Suspense` component to wrap around the `Grocery` component. And we will pass the `fallback` prop to the `Suspense` component. And we will show a loading message to the user while the chunks are loading.
 
 ```js
-<Suspense fallback={<h1>Loading...</h1>}>
-  <Grocery />
+const Grocery = lazy(() => import("./components/Grocery"));
+
+{
+  path: "/grocery",
+  element: (
+    <Suspense fallback={<h1>Loading...</h1>}>
+      <Grocery />
+    </Suspense>
+  ),
+}
 ```
