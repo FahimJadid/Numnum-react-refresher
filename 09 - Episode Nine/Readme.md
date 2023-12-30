@@ -21,6 +21,13 @@
     - Maintainability: Ease of locating and fixing errors, bugs, and other issues.
     - Reusability: The ability to reuse components in other systems.
 
+- # Q: What is Lazy Loading?
+
+  - Ans: Lazy loading is a design pattern commonly used in computer programming to defer initialization of an object until the point at which it is needed. It can contribute to efficiency in the program's operation if properly and appropriately used. The opposite of lazy loading is eager loading. In react we can use lazy loading to load the chunks only when they are needed. This improves the performance of our application.
+
+- # Q: What is Suspense in react?
+  - Ans: Suspense is a component that lets you “wait” for some code to load and declaratively specify a loading state (like a spinner) while we’re waiting. Suspense is a new feature in React 16.6. It is used to load asynchronous data in React. Suspense lets your components “wait” for something before they can render. Today, Suspense only supports one use case: loading components dynamically with dynamic import(). In the future, it will support other use cases like data fetching.
+
 ## Optimizations & Cleaning Up & Custom Hooks & Single responsibility principle and Modularity:
 
 # Custom Hooks:
@@ -230,4 +237,32 @@ if (onlineStatus === false)
 import useOnlineStatus from "./../Utils/useOnlineStatus";
 
 <li>Online:{onlineStatus ? "✅" : "🔴"}</li>;
+```
+
+# Chunking, code splitting, dynamic bundling & Lazy loading :
+
+- We will use code splitting to split our code into smaller chunks. And we will use lazy loading to load the chunks only when they are needed. So we will use code splitting and lazy loading to improve the performance of our application.
+
+- To understand code splitting, dynamic bundling and lazy loading we need to understand how webpack/parcel or any other bundler works. So these are module bundlers. So it takes all of our JavaScript files and bundles them into a single JavaScript file. So when we run our application, the browser downloads this single JavaScript file and runs it. So this is how bundler works.
+  `But the problem with this approach is that if our application is very big then the JavaScript file will also be very big. And it will take a lot of time to download this JavaScript file. And it will also take a lot of time to run this JavaScript file. So this will slow down our application. So to solve this problem we will use code splitting and lazy loading.`
+
+- That's why we have created a simple Grocery component to imitate a big application. So what we are trying is, when our user is in the Body component we will only load the Body component JavaScript file. And when our user is in the Grocery component we will only load the Grocery component JavaScript file. So we are kind of switching between components using lazy function from react and only loading the JavaScript file which is needed by the user. So this will improve the performance of our application.
+
+- let's see the syntax of lazy loading. So we will use `React.lazy()` function to load the chunks only when they are needed. And we will use `React.Suspense` component to show a fallback UI to the user while the chunks are loading.
+
+- Now let's get familiar with lazy syntax.
+
+```js
+const Grocery = lazy(() => {
+  import("./components/Grocery");
+});
+```
+
+- So we will use `React.lazy()` function to load the Grocery chunk only when they it needed. And we will pass a function to this `React.lazy()` function. And inside this function we will use `import()` function to import the component which we want to load lazily. So we will import the Grocery component lazily. And we will store the return value of this `React.lazy()` function in a variable called `Grocery`.
+
+- Now let's see how to use this `Grocery` variable inside our JSX. So we will use `React.Suspense` component to show a fallback UI to the user while the chunks are loading. And we will use `Suspense` component to wrap around the `Grocery` component. And we will pass the `fallback` prop to the `Suspense` component. And we will show a loading message to the user while the chunks are loading.
+
+```js
+<Suspense fallback={<h1>Loading...</h1>}>
+  <Grocery />
 ```
