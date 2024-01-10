@@ -17,20 +17,27 @@ const RestaurantMenu = () => {
   const { menu } = resInfo?.page_data?.order?.menuList?.menus[0];
 
   return (
-    <div className="menu">
-      <h1>{name}</h1>
-      <p>{cuisine_string}</p>
-      <h2>{menu?.name}</h2>
-      <ul>
-        {Array.isArray(menus) &&
-          menus.map((resMenu) => (
-            <li
-              key={resMenu?.menu?.categories[0]?.category?.items[0]?.item?.id}
-            >
-              {resMenu?.menu?.categories[0]?.category?.items[0]?.item?.name}
-            </li>
-          ))}
-      </ul>
+    <div className='my-4'>
+        <div>
+
+            <div className='basis-8/12 space-y-2'>
+              <h1 className='text-lg font-semibold'>{name}</h1>
+              <p className='text-xs font-semibold'>{cuisine_string}</p>
+              <h2 className='text-xs font-semibold'>{menu?.name}</h2>
+            </div>
+
+            <ul className='p-4'>
+              {Array.isArray(menus) &&
+                menus.map((resMenu) => (
+                  <li
+                    className='p-2 py-8 flex gap-4 md:gap-8 justify-between items-center border-b'
+                    key={resMenu?.menu?.categories[0]?.category?.items[0]?.item?.id}
+                  >
+                    {resMenu?.menu?.categories[0]?.category?.items[0]?.item?.name}
+                  </li>
+                ))}
+            </ul>
+        </div>
     </div>
   );
 };

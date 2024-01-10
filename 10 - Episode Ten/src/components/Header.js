@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import logo from "../../images/Logo.png";
+import Logo from "./Logo";
 import useOnlineStatus from "./../Utils/useOnlineStatus";
 
 const Header = () => {
@@ -10,31 +10,55 @@ const Header = () => {
   const onlineStatus = useOnlineStatus();
 
   return (
-    <div className="header">
-      <div className="logo-container">
-        <Link to="/">
-          {" "}
-          <img className="logo" src={logo} alt="" />
-        </Link>
-      </div>
-      <div className="nav-items">
-        <ul>
-          <li>Online:{onlineStatus ? "✅" : "🔴"}</li>
+    <header className="sticky w-full top-0 bg-white z-20 py-4 border-b shadow-sm border-gray-100">
+      <div className="container-max flex justify-between items-center">
+        <div className="flex items gap-2 md:gap-4">
+          <Logo />
+        </div>
+
+        <ul className="text-zinc-700 ml-auto gap-2 md:gap-4 items-center hidden md:flex">
           <li>
-            <Link to="/">Home</Link>
+            <Link
+              to="/"
+              className="p-2 md:px-4 hover:bg-rose-100 rounded-md flex items-center gap-2"
+            >
+              <p className="hidden md:block">Home</p>
+            </Link>
           </li>
           <li>
-            <Link to="/about">About</Link>
+            <Link
+              to="/about"
+              className="p-2 md:px-4 hover:bg-rose-100 rounded-md flex items-center gap-2"
+            >
+              <p className="hidden md:block">About</p>
+            </Link>
           </li>
           <li>
-            <Link to="/contact">Contact</Link>
+            <Link
+              to="/contact"
+              className="p-2 md:px-4 hover:bg-rose-100 rounded-md flex items-center gap-2"
+            >
+              <p className="hidden md:block">Contact</p>
+            </Link>
           </li>
           <li>
-            <Link to="/grocery">Grocery</Link>
+            <Link
+              to="/grocery"
+              className="p-2 md:px-4 hover:bg-rose-100 rounded-md flex items-center gap-2"
+            >
+              <p className="hidden md:block">Grocery</p>
+            </Link>
           </li>
-          <li>Cart</li>
+          <li>
+            <Link
+              to="/cart"
+              className="p-2 relative md:px-4 hover:bg-rose-100 rounded-md flex items-center gap-2"
+            >
+              <p className="hidden md:block">Cart</p>
+            </Link>
+          </li>
           <button
-            className="btn login"
+            className="ml-4 bg-rose-500 text-white p-2 px-4 rounded-md items-center gap-2 hidden md:flex"
             onClick={() => {
               isLogin === "Login" ? setLogin("Logout") : setLogin("Login");
             }}
@@ -43,7 +67,7 @@ const Header = () => {
           </button>
         </ul>
       </div>
-    </div>
+    </header>
   );
 };
 
