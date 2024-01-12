@@ -26,6 +26,55 @@
   };
   ```
 
+- # Q: What is Controlled & Uncontrolled components ?
+
+  - Ans: In a controlled component, form data is handled by a React component. The alternative is uncontrolled components, where form data is handled by the DOM itself.
+    To write an uncontrolled component, instead of writing an event handler for every state update, you can use a ref to get form values from the DOM.
+    For example, this code accepts a single name in an uncontrolled component:
+
+  ```js
+  class NameForm extends React.Component {
+    constructor(props) {
+      super(props);
+      this.handleSubmit = this.handleSubmit.bind(this);
+      this.input = React.createRef();
+    }
+
+    handleSubmit(event) {
+      alert("A name was submitted: " + this.input.current.value);
+      event.preventDefault();
+    }
+
+    render() {
+      return (
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Name:
+            <input type="text" ref={this.input} />
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
+      );
+    }
+  }
+  ```
+
+- # Q: What is Lifting the state means ?
+
+  - Ans: Lifting state up is the process of moving the state from one component to the parent component. This is done to share the state between multiple components. It is also known as state hoisting or lifting state up in React.
+
+- # Q: What is the difference between props and state ?
+
+  - Ans: Props are used to pass data from parent to child components. They are like function arguments in JavaScript and attributes in HTML.
+
+  - State is used to change the component state from within. It is like variables declared in a function or class method.
+
+- # Q: What is Consists of UI layer & Data layer ?
+
+  - Ans: The UI layer is the layer that the user interacts with. It consists of the components that are rendered on the screen. Such as the header, body, and footer components.
+
+  The data layer is the layer that handles the data. Such as state management, fetching data from the server, and so on.
+
 ## Managing Data Effectively with Higher Order Components :
 
 - # Step 1: Implement Promoted level:
@@ -84,3 +133,5 @@ export const withPromotedLabel = (RestaurantCard) => {
 ```
 
 - Also added props to the new withPromotedLabel and passed it to the RestaurantCard component. This is because we are passing props to the RestaurantCard component from the Body component. If we don’t pass the props, the RestaurantCard component will not receive the props from the Body component.
+
+- # Step 2: update the RestaurantMenu component:
