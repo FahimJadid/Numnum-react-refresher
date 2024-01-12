@@ -24,13 +24,14 @@ const RestaurantMenu = () => {
 
   console.log(menuCategories);
   return (
-    <div className="my-4">
-      <div>
-        <div className="basis-8/12 space-y-2">
-          <h1 className="text-lg font-semibold">{name}</h1>
-          <p className="text-xs font-semibold">{cuisine_string}</p>
+    <>
+      <div className="flex cursor-pointer justify-between items-center p-4 my-2 rounded-md bg-gray-50 select-none">
+        <div className="basis-8/12 space-y-2 p-4">
+          <h3 className="text-lg font-semibold">{name}</h3>
+          <p className="text-xs font-thin">{cuisine_string}</p>
         </div>
 
+        {/* Menu Categories items */}
         {/* <ul className="p-4">
           {Array.isArray(menus) &&
             menus.map((resMenu) => (
@@ -43,18 +44,42 @@ const RestaurantMenu = () => {
             ))}
         </ul> */}
 
+        {/* Menu categories */}
         <ul className="p-4">
           {menuCategories.map((menuCategory) => (
             <li
               className="p-2 py-8 flex gap-4 md:gap-8 justify-between items-center border-b"
               key={menuCategory?.id}
             >
-              {menuCategory?.name}
+              <div className="basis-8/12 space-y-2">
+                <h2 className="text-base font-semibold">
+                  {menuCategory?.name}
+                </h2>
+                <ul className="font-semibold">
+                  {menuCategory?.categories.map((cate) => (
+                    <li className="p-2 flex gap-4 md:gap-8 justify-between items-center border-b">
+                      <ul className="text-xs font-semibold">
+                        {cate?.category?.items.map((itm) => (
+                          <>
+                            <h3 className="font-semibold">{itm?.item?.name}</h3>
+                            <p className="p-2 py-4 font-thin">
+                              {itm?.item?.desc}
+                            </p>
+                            <p className="p-2 pb-4 font-thin">
+                              Price: {itm?.item?.price}
+                            </p>
+                          </>
+                        ))}
+                      </ul>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </li>
           ))}
         </ul>
       </div>
-    </div>
+    </>
   );
 };
 
