@@ -85,7 +85,12 @@
   - Ans: Passing props can become verbose and inconvenient when you need to pass some props deeply through the tree, or if many components need the same prop. The nearest common ancestor could be far removed from the components that need data, and lifting state up that high can lead to a situation called prop drilling. So we should avoid prop drilling. So it would be great if there is a way to teleport data to the components in the tree that need it without passing props. It can be solved with React's context feature!
 
 - # Q: WHat is context and why it is an alternative to passing props?
+
   - Ans: Context provides a way to pass data through the component tree without having to pass props down manually at every level. Context is designed to share data that can be considered “global” for a tree of React components, such as the current authenticated user, theme, or preferred language. Context is primarily used when some data needs to be accessible by many components at different nesting levels. Apply it sparingly because it makes component reuse more difficult. If you only want to avoid passing some props through many levels, component composition is often a simpler solution than context.
+
+- # Q: Should we use context everywhere ?
+
+  - Ans: - Now one thing to note here is that useContext helps us to access the context value from anywhere in the component tree. And it fixes the problem of prop drilling. But does it mean that we should use it everywhere? The answer is no. We should not keep all the data in context instead we should keep only the data that is required by many components in the application. If we keep all the data in context, it will be difficult to manage and debug the application. So we should use context sparingly. But one thing for sure by using context we can access the data from anywhere in the component tree without passing props manually.
 
 ## Managing Data Effectively with Higher Order Components :
 
@@ -164,3 +169,5 @@ const UserContext = createContext({
 
 export default UserContext;
 ```
+
+- Now one thing to note here is that useContext helps us to access the context value from anywhere in the component tree. And it fixes the problem of prop drilling. But does it mean that we should use it everywhere? The answer is no. We should not keep all the data in context instead we should keep only the data that is required by many components in the application. If we keep all the data in context, it will be difficult to manage and debug the application. So we should use context sparingly. But one thing for sure by using context we can access the data from anywhere in the component tree without passing props manually.

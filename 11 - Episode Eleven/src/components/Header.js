@@ -10,8 +10,8 @@ const Header = () => {
 
   const onlineStatus = useOnlineStatus();
 
-  const data = useContext(UserContext);
-  console.log(data);
+  const loggedInUser = useContext(UserContext);
+  console.log(loggedInUser);
   return (
     <header className="sticky w-full top-0 bg-white z-20 py-4 border-b shadow-sm border-gray-100">
       <div className="container-max flex justify-between items-center">
@@ -69,7 +69,9 @@ const Header = () => {
             {isLogin}
           </button>
 
-          <li className="p-2 relative md:px-4 hover:bg-rose-100 rounded-md flex items-center gap-2"></li>
+          <li className="p-2 relative md:px-4 hover:bg-rose-100 rounded-md flex items-center gap-2">
+            {loggedInUser.loggedInUser}
+          </li>
         </ul>
       </div>
     </header>
