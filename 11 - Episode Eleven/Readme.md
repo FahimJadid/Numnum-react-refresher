@@ -183,3 +183,28 @@ import UserContext from "../Utils/UserContext";
   </UserContext.Consumer>
 </div>;
 ```
+
+```js
+import UserContext from "./Utils/UserContext";
+const [username, setUserInfo] = useState();
+
+useEffect(() => {
+  // Api call
+  const data = {
+    name: "Jadid",
+  };
+
+  setUserInfo(data.name);
+}, []);
+
+<UserContext.Provider value={{ loggedInUser: username }}>
+  <div className="app">
+    <UserContext.Provider value={{ loggedInUser: "Elon Musk" }}>
+      <Header />
+    </UserContext.Provider>
+    <Outlet />
+  </div>
+</UserContext.Provider>;
+```
+
+- Here we can also modify the context value. For example, we can change the loggedInUser value to jadid from fetching data from api for the whole app component which was previously set as default value and we can also nest the context and use in the header component and change the loggedInUser value to Elon Musk. Now if we go to the About component, we can see that the logged in user is jadid and in the header is Elon musk. So we can modify the context value from anywhere in the component tree.
