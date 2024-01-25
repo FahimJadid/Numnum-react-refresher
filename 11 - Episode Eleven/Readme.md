@@ -75,6 +75,18 @@
 
   The data layer is the layer that handles the data. Such as state management, fetching data from the server, and so on.
 
+- # Q: What is Prop drilling ?
+
+  - Ans: Prop drilling is the process of passing props from one component to another component down the hierarchy. It is a common problem in React applications because react has one way data flow. In react data is passed from parent to children components using props. If we want to pass data from a parent component to a grandchild component, we have to pass the data through the intermediate components. It's kind of top to bottom data flow.
+    This is called prop drilling.
+
+- # Q: The problem with passing props ?
+
+  - Ans: Passing props can become verbose and inconvenient when you need to pass some props deeply through the tree, or if many components need the same prop. The nearest common ancestor could be far removed from the components that need data, and lifting state up that high can lead to a situation called prop drilling. So we should avoid prop drilling. So it would be great if there is a way to teleport data to the components in the tree that need it without passing props. It can be solved with React's context feature!
+
+- # Q: WHat is context and why it is an alternative to passing props?
+  - Ans: Context provides a way to pass data through the component tree without having to pass props down manually at every level. Context is designed to share data that can be considered “global” for a tree of React components, such as the current authenticated user, theme, or preferred language. Context is primarily used when some data needs to be accessible by many components at different nesting levels. Apply it sparingly because it makes component reuse more difficult. If you only want to avoid passing some props through many levels, component composition is often a simpler solution than context.
+
 ## Managing Data Effectively with Higher Order Components :
 
 - # Step 1: Implement Promoted level:
@@ -134,4 +146,15 @@ export const withPromotedLabel = (RestaurantCard) => {
 
 - Also added props to the new withPromotedLabel and passed it to the RestaurantCard component. This is because we are passing props to the RestaurantCard component from the Body component. If we don’t pass the props, the RestaurantCard component will not receive the props from the Body component.
 
-- # Step 2: update the RestaurantMenu component:
+- # Step 2: update the RestaurantMenuItem with Accordion:
+
+- # Step 2: Understanding Context: a prop drilling alternative:
+
+- Context solves the problem of props drilling. It provides a way to pass data through the component tree without having to pass props down manually at every level.
+
+- Let's create a context inside Utils folder.
+- We are creating an user context to keep track of a logged in user in our application.
+
+```js
+
+```
