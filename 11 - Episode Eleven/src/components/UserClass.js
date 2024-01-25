@@ -22,15 +22,15 @@ class UserClass extends React.Component {
       userInfo: json,
     });
 
-    console.log(json);
+    // console.log(json);
   }
 
   componentDidUpdate() {
-    console.log("componentDidUpdate called");
+    // console.log("componentDidUpdate called");
   }
 
   componentWillUnmount() {
-    console.log("componentWillUnmount called");
+    // console.log("componentWillUnmount called");
   }
 
   render() {

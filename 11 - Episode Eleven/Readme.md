@@ -171,3 +171,15 @@ export default UserContext;
 ```
 
 - Now one thing to note here is that useContext helps us to access the context value from anywhere in the component tree. And it fixes the problem of prop drilling. But does it mean that we should use it everywhere? The answer is no. We should not keep all the data in context instead we should keep only the data that is required by many components in the application. If we keep all the data in context, it will be difficult to manage and debug the application. So we should use context sparingly. But one thing for sure by using context we can access the data from anywhere in the component tree without passing props manually.
+
+- Using context in class-based components: About component
+
+```js
+import UserContext from "../Utils/UserContext";
+<div>
+  Logged in user:
+  <UserContext.Consumer>
+    {(loggedInUser) => <h1>{loggedInUser.loggedInUser}</h1>}
+  </UserContext.Consumer>
+</div>;
+```
