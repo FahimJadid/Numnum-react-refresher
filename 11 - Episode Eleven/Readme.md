@@ -156,5 +156,11 @@ export const withPromotedLabel = (RestaurantCard) => {
 - We are creating an user context to keep track of a logged in user in our application.
 
 ```js
+import { createContext } from "react";
 
+const UserContext = createContext({
+  loggedInUser: "Default",
+});
+
+export default UserContext;
 ```

@@ -1,5 +1,9 @@
+import { useContext } from "react";
+import UserContext from "../Utils/UserContext";
+
 const RestaurantCard = (props) => {
   const { resData } = props;
+  const { loggedInUser } = useContext(UserContext);
 
   const { image, name, cuisine, rating, cft } = resData?.info;
   const { deliveryTime } = resData?.order;
@@ -20,6 +24,7 @@ const RestaurantCard = (props) => {
       </h4>
       <h4 className="text-zinc-600">{deliveryTime}</h4>
       <h4 className="text-zinc-600">{cft.text}</h4>
+      <h4 className="text-zinc-600">User: {loggedInUser}</h4>
     </div>
   );
 };
